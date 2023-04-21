@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 export default function Register() {
 
-const [data, setData] = React.useState<[]>([]);
+  const [data, setData] = React.useState<[]>([]);
   const [id, setId] = React.useState<number>();
   
  const handleDelete = async (e: React.SyntheticEvent) => {
@@ -38,13 +38,19 @@ React.useEffect(() => {
       try {
         const res = await fetch(url,
         {
-            method: "GET",
+            method: "POST",
             credentials: "include",
             mode: "cors",
             headers: new Headers({
-              "Access-Control-Allow-Credentials": "true"
+              "Access-Control-Allow-Credentials": "true",
+              "Content-Type": "application/json"
             }),
-          });
+            
+            body: JSON.stringify({
+            email: email
+          })
+          },
+        );
 
         if (res.status == 403) {
           return router.push("/");
@@ -64,8 +70,18 @@ React.useEffect(() => {
 
     return (
       <Layout>
-      <p> Hello world! </p>
-    </Layout>
+    {data ?
+      <div className="py-10 flex flex-col items-center gap-4 bg-sky-200">
+      data.map((cust) => (
+        <div key={cust.id}>
+          <p> {cust.firstname} {cust.lastname} </p>
+          <p> Email: {cust.email} </p>
+          <p> Phone: {cust.phone} </p>
+        </div>
+      ))  </div>
+    : null}
+      
+          </Layout>
   )
 }
 

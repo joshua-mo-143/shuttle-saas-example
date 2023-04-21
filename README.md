@@ -3,11 +3,25 @@
 This repo is an example of a CRM SaaS written with a Next.js Typescript frontend and a Rust backend.
 
 ### Features
-- Take subscription payments
-- CRUD records
+- Take subscription payments with Stripe
+- CRUD API for customers/contracts ("deals")
+- Email and OAuth (via Google) login
+- Mailgun (email subscription, welcome email etc)
 
 ### Todo List
-- Authentication (OAuth??)
-- API keys (allow users to integrate the CRM into their own apps)
-- Mailgun stuff (welcome email, allow subbing to mailgun etc)
+#### Backend
+- Oauth? Not sure if this will be implemented.
 - Background task for deleting expired sessions from database
+
+#### Frontend
+- Single customer page
+- Edit customer function
+- Deal index page
+- Single deal page
+- Create deal page
+- Delete deal function
+- Edit deal function
+
+- Make customer index page pretty
+- Make create customer page pretty
+- Make pricing table pretty

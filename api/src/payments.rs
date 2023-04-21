@@ -1,4 +1,4 @@
-use axum::{extract::State, http::StatusCode};
+use axum::{extract::State, http::StatusCode, Json};
 use serde::{Deserialize, Serialize};
 use stripe::{
     AttachPaymentMethod, CardDetailsParams, CreateCustomer, CreatePaymentMethod,
@@ -9,19 +9,23 @@ use stripe::{
 use crate::AppState;
 
 #[derive(Deserialize, Serialize)]
-pub struct PaymentUrl {
-    pub url: String,
+pub struct PaymentInfo {
+    name: String,
+    email: String,
+    card_number: String,
+    exp_year: i32,
+    exp_month: i32,
+    cvc: String,
 }
 
-pub async fn create_checkout(State(state): State<AppState>) -> Result<StatusCode, StatusCode> {
+pub async fn create_checkout(State(state): State<AppState>, Json(req): Json<PaymentInfo>) -> Result<StatusCode, StatusCode> {
     let ctx = stripe::Client::new(&state.stripe_key);
 
     let customer = Customer::create(
         &ctx,
         CreateCustomer {
-            name: Some("Joshua Mo"),
-            email: Some("joshua.mo.876@gmail.com"),
-            description: Some("A fake customer."),
+            name: Some(&req.name),
+            email: Some(&req.email),
             ..Default::default()
         },
     )
@@ -35,10 +39,10 @@ pub async fn create_checkout(State(state): State<AppState>) -> Result<StatusCode
                 type_: Some(PaymentMethodTypeFilter::Card),
                 card: Some(CreatePaymentMethodCardUnion::CardDetailsParams(
                     CardDetailsParams {
-                        number: "4000008260000000".to_string(), // UK visa
-                        exp_year: 2025,
-                        exp_month: 1,
-                        cvc: Some("123".to_string()),
+                        number: req.email,
+                        exp_year: req.exp_year,
+                        exp_month: req.exp_month,
+                        cvc: Some(req.cvc),
                     },
                 )),
                 ..Default::default()
