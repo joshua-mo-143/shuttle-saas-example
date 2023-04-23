@@ -1,26 +1,27 @@
 import React from "react"
 import Link from 'next/link'
+import {accountStore} from "@/zustandStore"
 
 export default function Navbar() {
 
-  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
+  const {email} = accountStore();
+
   return (
   <nav className="w-screen h-10 bg-sky-200/50 flex flex-row items-center">
       <ul className="m-5 flex gap-5 flex flex-row justify-end">
-        {!loggedIn ?
+    { email == "" ?
       <>
         <li><Link href="/">Logo</Link></li>
-        <li><Link href="#about">About</Link></li>
-        <li><Link href="#pricing">Pricing</Link></li>
-        <li><Link href="#contact">Contact</Link></li>
-    </> : 
+        <li><Link href="/login">Log In</Link></li>
+        <li><Link href="/register">Register</Link></li>
+      </> : 
       <>
         <li><Link href="/dashboard/customers">Customers</Link></li>
         <li><Link href="/dashboard/deals">Deals</Link></li>
         <li><Link href="/upgrade">Upgrade</Link></li>
-
-</>}
-        <li>{loggedIn ? <Link href="/logout">Log Out</Link> : <Link href="/login">Log In</Link>}</li>
+        <li><Link href="/logout">Log Out</Link></li>
+        <li>Welcome back, {email}!</li>
+      </>}
     </ul>
   </nav>
   )

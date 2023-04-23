@@ -3,28 +3,28 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
     id SERIAL PRIMARY KEY,
-    session_id VARCHAR NOT NULL,
-    user_id int,
+    session_id VARCHAR NOT NULL UNIQUE,
+    user_id int NOT NULL UNIQUE,
     expires TIMESTAMP WITH TIME ZONE,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS customers (
     id SERIAL PRIMARY KEY,
-    first_name VARCHAR NOT NULL,
-    last_name VARCHAR NOT NULL,
+    firstName VARCHAR NOT NULL,
+    lastName VARCHAR NOT NULL,
     email VARCHAR NOT NULL,
     phone VARCHAR(14) NOT NULL,
-    priority int(1) NOT NULL,
+    priority SMALLINT NOT NULL CHECK (priority >= 1 AND priority <= 5),
     owner_id int NOT NULL,
     is_archived BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    CONSTRAINT FK_customer FOREIGN KEY (owner_id) REFERENCES user(id)
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_customer FOREIGN KEY(owner_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS deals (
@@ -37,9 +37,9 @@ CREATE TABLE IF NOT EXISTS deals (
     last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     customer_id int NOT NULL,
     owner_id int NOT NULL,
-    CONSTRAINT FK_deal FOREIGN KEY (owner_id) REFERENCES user(id),
-    CONSTRAINT FK_owner FOREIGN KEY (owner_id) REFERENCES user(id),
-    is_archived BOOLEAN DEFAULT FALSE,
+    CONSTRAINT FK_deal FOREIGN KEY(owner_id) REFERENCES users(id),
+    CONSTRAINT FK_owner FOREIGN KEY(owner_id) REFERENCES users(id),
+    is_archived BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS apikeys (
@@ -48,5 +48,5 @@ CREATE TABLE IF NOT EXISTS apikeys (
     owner_id int,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     last_used TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT FK_customer FOREIGN KEY (owner_id) REFERENCES user(id)
+    CONSTRAINT FK_customer FOREIGN KEY (owner_id) REFERENCES users(id)
 );

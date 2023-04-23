@@ -3,3 +3,4 @@ Shuttle.toml
 Secrets.toml
 Secrets.dev.toml
 test_sub.sh
+public/

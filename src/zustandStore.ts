@@ -15,8 +15,7 @@ export const accountStore = create<AcctState>()(persist((set, get) => ({
 	changeEmail: (to) => set({email: to}),
 	}),
 	
-	{name: 'name',
-		email: 'email',
+	{name: 'user',
 	storage: createJSONStorage(() => sessionStorage),
 }
 

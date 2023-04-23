@@ -1,12 +1,24 @@
 import Navbar from "./navbar"
 import React from "react"
 import Head from "next/head"
+import {accountStore} from '@/zustandStore'
+import {useRouter} from 'next/router'
 
 type Props = {
   children: React.ReactNode | React.ReactNode[]
 }
 
 export default function Layout({children}: Props) {
+
+  let router = useRouter();
+  let {email} = accountStore();
+
+  React.useEffect(() => {
+    if (router.pathname.includes(`${window.location.host}/dashboard`) && email == "") {
+      router.push("/login");
+    }
+  }, [router.pathname])  
+
   
   return (
     <div className="min-h-screen flex-col items-center bg-stone-200">

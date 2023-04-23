@@ -14,6 +14,7 @@ use crate::AppState;
 
 #[derive(Deserialize)]
 pub struct RegisterDetails {
+    name: String,
     email: String,
     password: String,
 }
@@ -30,7 +31,8 @@ pub async fn register(
 ) -> impl IntoResponse {
     let hashed_password = bcrypt::hash(newuser.password, 10).unwrap();
 
-    let query = sqlx::query("INSERT INTO users (email, password) values ($1, $2)")
+    let query = sqlx::query("INSERT INTO users (name, email, password) values ($1, $2, $3)")
+        .bind(newuser.name)
         .bind(newuser.email)
         .bind(hashed_password)
         .execute(&state.postgres);
@@ -45,6 +47,7 @@ pub async fn register(
     }
 }
 
+#[axum_macros::debug_handler]
 pub async fn login(
     State(state): State<AppState>,
     jar: PrivateCookieJar,

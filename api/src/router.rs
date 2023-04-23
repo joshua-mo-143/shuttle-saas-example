@@ -54,6 +54,11 @@ pub fn create_api_router(state: AppState) -> Router {
         .nest("/payments", payments_router)
         .nest("/auth", auth_router)
         .route("/subscribe", post(subscribe))
+        .route("/health", get(hello_world))
         .with_state(state)
         .layer(cors)
+}
+
+pub async fn hello_world() -> &'static str {
+    "Hello world!"
 }
