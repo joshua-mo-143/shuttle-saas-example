@@ -3,6 +3,7 @@ import React from "react"
 import { useRouter } from 'next/router'
 import {accountStore} from "../../../zustandStore"
 import Link from 'next/link'
+import CustomerSingleModal from '@/components/CustomerSingleModal'
 
 interface Customer {
   id: number,
@@ -15,33 +16,23 @@ interface Customer {
 export default function CustomerIndex() {
 
   const [data, setData] = React.useState<Customer[]>([]);
-  const [id, setId] = React.useState<number>();
+  const [id, setId] = React.useState<number>(1);
+  const [vis, setVis] = React.useState<boolean>(false);
   const {email} = accountStore();
 
   let router = useRouter();
 
- const handleDelete = async (e: React.SyntheticEvent) => {
+  const handleVis = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     const element = e.target as HTMLButtonElement;
-    const id = element.getAttribute("data-id");
+  const customerId = element.getAttribute("data-id");
 
-    const url = `//${window.location.host}/api/customers/${id}`
-
-    try {
-      
-const res = await fetch(url, {
-      mode: 'cors',
-      method: 'DELETE'
-    });
-
-    window.location.reload()
-      
-    } catch (e: any) {
-      console.log(`Error: ${e}`)
-    }
-    
-      }
+  // @ts-ignore
+    const customerIdAsInt = parseInt(customerId)
+    setId(customerIdAsInt)
+    setVis(true)
+  }
   
 React.useEffect(() => {
     const fetchData = async () => {
@@ -81,22 +72,23 @@ React.useEffect(() => {
 
     return (
       <Layout>
-      <div className="py-10 flex flex-col items-center gap-4 bg-sky-200">
+      <CustomerSingleModal data={data} id={id} vis={vis} setVis={setVis}/>
+      <div className="py-10 flex flex-col items-center gap-4">
         <h1 className="lg:text-3xl text-xl">View Customers</h1>
+          <Link href="/dashboard/customers/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Customer</Link>
     {data ?
-      <div className="flex flex-col items-center gap-4">
+      <div className="grid grid-cols-5 grid-rows-auto items-center gap-4">
       {data.map((cust) => (
-        <div key={cust.id} className="px-10 py-4 bg-stone-200">
-          <p> {cust.firstname} {cust.lastname} </p>
+        <div key={cust.id} className="px-10 py-4 bg-stone-200 flex flex-col gap-2">
+          <p className="text-lg"> {cust.firstname} {cust.lastname} </p>
           <p> Email: {cust.email} </p>
           <p> Phone: {cust.phone} </p>
-          <Link href={`/dashboard/customers/${cust.id}`} className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all">View More</Link>
+          <button data-id={cust.id} onClick={handleVis} className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">View More</button>
         </div>)
       )}
   </div>  
     : null }
 
-<Link href="/dashboard/customers/create">Create Customer</Link>
       </div>
       
           </Layout>

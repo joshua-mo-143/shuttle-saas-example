@@ -57,12 +57,12 @@ export default function Home() {
         <h1 className="lg:text-2xl text-xl text-center">Log In</h1>
           <label htmlFor="email" className="flex flex-row gap-4 items-center">
             <span>Email: </span>
-            <input type="email" name="email" className="px-5 py-2" value={loginEmail} onInput={(e) => setLoginEmail((e.target as HTMLInputElement).value)}></input>
+            <input type="email" name="email" className="px-5 py-2 shadow-md rounded-md bg-stone-100" value={loginEmail} onInput={(e) => setLoginEmail((e.target as HTMLInputElement).value)}></input>
       </label>
 
           <label htmlFor="password" className="flex flex-row gap-4 items-center">
             <span>Password: </span>
-          <input type={pwVis ? "text" : "password"} name="password" className="px-5 py-2" value={pw} onInput={(e) => setPw((e.target as HTMLInputElement).value)}></input>
+          <input type={pwVis ? "text" : "password"} name="password" className="px-5 py-2 shadow-md rounded-md bg-stone-100" value={pw} onInput={(e) => setPw((e.target as HTMLInputElement).value)}></input>
 
             <button onClick={(e) => togglePassword(e)}>
 {pwVis ? <p>Hide</p> : <p>Show</p>}

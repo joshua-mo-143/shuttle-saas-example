@@ -1,84 +1,97 @@
 import Layout from "../../../components/Layout"
 import React from "react"
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
+import {accountStore} from "../../../zustandStore"
+import Link from 'next/link'
+import CustomerSingleModal from '@/components/CustomerSingleModal'
 
-export default function CreateCustomer() {
+interface Customer {
+  id: number,
+  firstname: string,
+  lastname: string,
+  email: string,
+  phone: string
+}
 
-  const [firstName, setFirstName] = React.useState<string>("");
-  const [lastName, setLastName] = React.useState<string>("");
-  const [email, setEmail] = React.useState<string>("");
-  const [phone, setPhone] = React.useState<string>("");
-  const [priority, setPriority] = React.useState<string>("");
+export default function CustomerIndex() {
 
-let router = useRouter();
-    
+  const [data, setData] = React.useState<Customer[]>([]);
+  const [id, setId] = React.useState<number>(1);
+  const [vis, setVis] = React.useState<boolean>(false);
+  const {email} = accountStore();
 
-    const handleSubmit = async (e: React.SyntheticEvent) => {
+  let router = useRouter();
+
+  const handleVis = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    
-    const url = `//${window.location.host}/api/auth/register`
 
-    try {
-      let res = await fetch(url, 
-        {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone,
-            priority: Number(priority)
-          }),
-        })
+    const element = e.target as HTMLButtonElement;
+  const customerId = element.getAttribute("data-id");
 
-      if (res.ok) {
-        router.push("/dashboard/customers");
-      }
-      
-    } catch(e: any) {
-      console.log(`Error: ${e}`)
-    }
+  // @ts-ignore
+    const customerIdAsInt = parseInt(customerId)
+    setId(customerIdAsInt)
+    setVis(true)
   }
   
-  return (
-    <>
+React.useEffect(() => {
+    const fetchData = async () => {
+
+     const url = `//${window.location.host}/api/deals`
+
+      try {
+        const res = await fetch(url,
+        {
+            method: "POST",
+            mode: "cors",
+            headers: new Headers({
+              "Content-Type": "application/json"
+            }),
+            
+            body: JSON.stringify({
+            email: email
+          })
+          },
+        );
+
+        if (res.status == 403) {
+          return router.push("/login");
+        }
+      
+        const data = await res.json()
+
+        setData(data);
+
+      } catch (e: any) {
+        console.log(`Error: ${e}`);
+      }
+    };
+    fetchData()
+  }, [email, router]);
+    
+
+    return (
       <Layout>
-            <form className="py-10 flex flex-col gap-4 justify-center items-center">
-        <h1 className="lg:text-2xl text-xl text-center">Create Customer</h1>
-          <label htmlFor="firstname">
-            <span>First name: </span>
-            <input type="text" name="firstname" className="px-5 py-2" value={firstName} onInput={(e) => setFirstName((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="lastname">
-            <span>Last name: </span>
-            <input type="email" name="lastname" className="px-5 py-2" value={lastName} onInput={(e) => setLastName((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="email">
-            <span>Email address: </span>
-            <input type="text" name="email" className="px-5 py-2" value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="phone">
-            <span>Mobile number: </span>
-            <input type="text" name="phone" className="px-5 py-2" value={phone} onInput={(e) => setPhone((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="priority">
-            <span>Priority: </span>
-          <select name="priority" value={priority} onChange={(e) => setPriority((e.target as HTMLSelectElement).value)}>
-            <option value="1">Very Low</option>
-            <option value="2">Low</option>
-            <option value="3">Medium</option>
-            <option value="4">High</option>
-            <option value="5">Very High</option>
-            </select>
-      </label>
-          <button type="submit">Submit</button>
-          </form>
-    </Layout>
-  </>
+      <CustomerSingleModal data={data} id={id} vis={vis} setVis={setVis}/>
+      <div className="py-10 flex flex-col items-center gap-4">
+        <h1 className="lg:text-3xl text-xl">View Deals</h1>
+          <Link href="/dashboard/deals/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Deal</Link>
+    {data ?
+      <div className="grid grid-cols-5 grid-rows-auto items-center gap-4">
+      {data.map((cust) => (
+        <div key={cust.id} className="px-10 py-4 bg-stone-200 flex flex-col gap-2">
+          <p className="text-lg"> {cust.firstname} {cust.lastname} </p>
+          <p> Email: {cust.email} </p>
+          <p> Phone: {cust.phone} </p>
+          <button data-id={cust.id} onClick={handleVis} className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">View More</button>
+        </div>)
+      )}
+  </div>  
+    : null }
+
+      </div>
+      
+          </Layout>
   )
 }
 

@@ -21,7 +21,7 @@ export default function Layout({children}: Props) {
 
   
   return (
-    <div className="min-h-screen flex-col items-center bg-stone-200">
+    <div className="min-h-screen flex-col items-center">
       <Navbar/>
       {children}
   </div>

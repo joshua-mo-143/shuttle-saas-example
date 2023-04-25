@@ -33,20 +33,6 @@ pub async fn subscribe(
     }
 }
 
-fn email_params(domain: &str, recipient: String) -> HashMap<&'static str, String> {
-    let mut params = HashMap::new();
-
-    let sender = format!("Mailgun Sandbox <postmaster@{}>", domain);
-    let recipient = format!("New User <{}>", recipient);
-
-    params.insert("from", sender);
-    params.insert("to", recipient);
-    params.insert("subject", "Hello world!".to_string());
-    params.insert("template", "welcome".to_string());
-
-    params
-}
-
 fn sub_params(recipient: String) -> HashMap<&'static str, String> {
     let mut params = HashMap::new();
 

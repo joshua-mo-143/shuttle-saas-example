@@ -54,23 +54,23 @@ let router = useRouter();
         <h1 className="lg:text-2xl text-xl text-center">Create Customer</h1>
           <label htmlFor="firstname">
             <span>First name: </span>
-            <input type="text" name="first_name" className="px-5 py-2" value={firstName} onInput={(e) => setFirstName((e.target as HTMLInputElement).value)}></input>
+            <input type="text" name="first_name" className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={firstName} onInput={(e) => setFirstName((e.target as HTMLInputElement).value)}></input>
       </label>
           <label htmlFor="lastname">
             <span>Last name: </span>
-            <input type="text" name="last_name" className="px-5 py-2" value={lastName} onInput={(e) => setLastName((e.target as HTMLInputElement).value)}></input>
+            <input type="text" name="last_name" className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={lastName} onInput={(e) => setLastName((e.target as HTMLInputElement).value)}></input>
       </label>
           <label htmlFor="email">
             <span>Email address: </span>
-            <input type="email" name="email" className="px-5 py-2" value={custEmail} onInput={(e) => setCustEmail((e.target as HTMLInputElement).value)}></input>
+            <input type="email" name="email" className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={custEmail} onInput={(e) => setCustEmail((e.target as HTMLInputElement).value)}></input>
       </label>
           <label htmlFor="phone">
             <span>Mobile number: </span>
-            <input type="text" name="phone" className="px-5 py-2" value={phone} onInput={(e) => setPhone((e.target as HTMLInputElement).value)}></input>
+            <input type="text" name="phone" className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={phone} onInput={(e) => setPhone((e.target as HTMLInputElement).value)}></input>
       </label>
           <label htmlFor="priority">
             <span>Priority: </span>
-          <select name="priority" value={priority} onChange={(e) => setPriority((e.target as HTMLSelectElement).value)}>
+          <select name="priority" className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={priority} onChange={(e) => setPriority((e.target as HTMLSelectElement).value)}>
             <option value="1">Very Low</option>
             <option value="2">Low</option>
             <option value="3">Medium</option>

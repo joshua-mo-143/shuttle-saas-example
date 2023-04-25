@@ -1,85 +1,59 @@
-import Layout from "../../../components/Layout"
-import React from "react"
-import {useRouter} from 'next/router'
+import Layout from "@/components/Layout"
+import Link from 'next/link'
 
-export default function CreateCustomer() {
-
-  const [firstName, setFirstName] = React.useState<string>("");
-  const [lastName, setLastName] = React.useState<string>("");
-  const [email, setEmail] = React.useState<string>("");
-  const [phone, setPhone] = React.useState<string>("");
-  const [priority, setPriority] = React.useState<string>("");
-
-let router = useRouter();
-    
-
-    const handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
-    
-    const url = `//${window.location.host}/api/auth/register`
-
-    try {
-      let res = await fetch(url, 
-        {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone,
-            priority: Number(priority)
-          }),
-        })
-
-      if (res.ok) {
-        router.push("/dashboard/customers");
-      }
-      
-    } catch(e: any) {
-      console.log(`Error: ${e}`)
-    }
-  }
-  
+export default function Home() {
   return (
-    <>
+  <>
       <Layout>
-            <form className="py-10 flex flex-col gap-4 justify-center items-center">
-        <h1 className="lg:text-2xl text-xl text-center">Create Customer</h1>
-          <label htmlFor="firstname">
-            <span>First name: </span>
-            <input type="text" name="firstname" className="px-5 py-2" value={firstName} onInput={(e) => setFirstName((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="lastname">
-            <span>Last name: </span>
-            <input type="email" name="lastname" className="px-5 py-2" value={lastName} onInput={(e) => setLastName((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="email">
-            <span>Email address: </span>
-            <input type="text" name="email" className="px-5 py-2" value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="phone">
-            <span>Mobile number: </span>
-            <input type="text" name="phone" className="px-5 py-2" value={phone} onInput={(e) => setPhone((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="priority">
-            <span>Priority: </span>
-          <select name="priority" value={priority} onChange={(e) => setPriority((e.target as HTMLSelectElement).value)}>
-            <option value="1">Very Low</option>
-            <option value="2">Low</option>
-            <option value="3">Medium</option>
-            <option value="4">High</option>
-            <option value="5">Very High</option>
-            </select>
-      </label>
-          <button type="submit">Submit</button>
-          </form>
+              <section className="my-10 flex flex-col justify-center items-center w-full">
+        <h1 className="text-2xl lg:text-5xl text-center">Pricing</h1>
+          <div className="grid grid-cols-3 grid-rows-1 gap-10 mx-10 py-10 w-4/5 justify-items-center">
+            <div className="col-span-1 w-2/3 grid grid-cols-1 grid-rows-10 justify-center gap-2 justify-items-center text-center bg-sky-200 py-10 rounded-md">
+              
+              <p className="lg:text-3xl text-xl row-span-2">Basic</p>
+              <ul className="row-span-8 text-lg">
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+          </ul>
+              <p className="text-xl">This is you!</p>
+              </div>
+            <div className="col-span-1 w-2/3 grid grid-cols-1 grid-rows-10 justify-center gap-2 justify-items-center text-center bg-sky-200 py-10 rounded-md">
+              
+              <p className="lg:text-3xl text-xl row-span-2">Premium</p>
+              <ul className="row-span-8 text-lg">
+              <li>Everything in Basic!</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Only £11.99 a month!</li>
+          </ul>
+                  <Link href="/dashboard/upgrade/checkout" className="bg-stone-200 w-max px-10 py-4 self-center row-span-1 hover:bg-stone-100 transition-all">Pay</Link>
+              </div>
+
+            <div className="col-span-1 w-2/3 grid grid-cols-1 grid-rows-10 justify-center gap-2 justify-items-center text-center bg-sky-200 py-10 rounded-md">
+              
+              <p className="lg:text-3xl text-xl row-span-2">Corporate</p>
+              <ul className="row-span-8 text-lg">
+                <li>Everything in Premium!</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Lorem ipsum</li>
+              <li>Only £11.99 a month!</li>
+          </ul>
+                  <Link href="/dashboard/upgrade/checkout" className="bg-stone-200 w-max px-10 py-4 self-center row-span-1 hover:bg-stone-100 transition-all">Pay</Link>
+              </div>
+
+      </div>
+        </section>
+
     </Layout>
   </>
   )
 }
-
-

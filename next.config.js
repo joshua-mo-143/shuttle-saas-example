@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  trailingSlash: true,
   output: "export",
+  trailingSlash: true,
   distDir: "./api/public",
     images: {
     unoptimized: true,

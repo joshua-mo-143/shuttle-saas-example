@@ -1,6 +1,39 @@
 import Layout from "../components/Layout"
+import React from 'react'
 
 export default function Home() {
+
+  let [email, setEmail] = React.useState<string>("");
+   
+  const handleSubscribe = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
+
+    const url = `//${window.location.host}/api/subscribe`
+
+    try {
+      let res = await fetch(url, 
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email
+          }),
+        })
+
+      if (res.ok) {
+        let meme = document.querySelector("#emailfeedback") as HTMLParagraphElement;
+        meme.innerHTML = "Subscribed."
+      }
+      
+    } catch(e: any) {
+      console.log(`Error: ${e}`)
+    }
+
+  }
+  
   return (
   <>
       <Layout>
@@ -29,10 +62,12 @@ export default function Home() {
         </section>
         <section className="flex flex-col items-center gap-8">
             <p className="lg:text-3xl text-xl"> Subscribe to our mailing list and receive the latest updates. </p>
-          <form className="flex flex-row justify-center gap-4">
-            <input className="px-5 py-2"></input>
+          <form className="flex flex-row justify-center gap-4" onSubmit={(e) => handleSubscribe(e)}>
+            <input className="px-5 py-2" type="email" value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)}></input>
             <button type="submit">Submit</button>
       </form>
+          
+            <p id="emailresponse"></p>
         </section>
 
     </Layout>

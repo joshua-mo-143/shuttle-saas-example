@@ -12,9 +12,9 @@ use crate::AppState;
 pub struct PaymentInfo {
     name: String,
     email: String,
-    card_number: String,
-    exp_year: i32,
-    exp_month: i32,
+    card: String,
+    expyear: i32,
+    expmonth: i32,
     cvc: String,
 }
 
@@ -28,9 +28,9 @@ pub async fn create_checkout(State(state): State<AppState>, Json(req): Json<Paym
             email: Some(&req.email),
             ..Default::default()
         },
-    )
-    .await
-    .unwrap();
+    ).await.expect("Had an error creating customer!");
+
+    println!("Made a customer");
 
     let payment_method = {
         let pm = PaymentMethod::create(
@@ -39,17 +39,19 @@ pub async fn create_checkout(State(state): State<AppState>, Json(req): Json<Paym
                 type_: Some(PaymentMethodTypeFilter::Card),
                 card: Some(CreatePaymentMethodCardUnion::CardDetailsParams(
                     CardDetailsParams {
-                        number: req.email,
-                        exp_year: req.exp_year,
-                        exp_month: req.exp_month,
+                        number: req.card,
+                        exp_year: req.expyear,
+                        exp_month: req.expmonth,
                         cvc: Some(req.cvc),
+                        ..Default::default()
                     },
                 )),
                 ..Default::default()
             },
         )
-        .await
-        .unwrap();
+        .await.expect("Had an error creating payment method!");
+
+            println!("Made a payment method");
 
         PaymentMethod::attach(
             &ctx,
@@ -59,7 +61,9 @@ pub async fn create_checkout(State(state): State<AppState>, Json(req): Json<Paym
             },
         )
         .await
-        .unwrap();
+        .expect("Had an error attaching the payment method!");
+
+                    println!("Attached a payment method");
 
         pm
     };

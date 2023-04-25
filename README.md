@@ -14,7 +14,6 @@ This repo is an example of a CRM SaaS written with a Next.js Typescript frontend
 - Background task for deleting expired sessions from database
 
 #### Frontend
-- Single customer page
 - Edit customer function
 - Deal index page
 - Single deal page
@@ -22,6 +21,4 @@ This repo is an example of a CRM SaaS written with a Next.js Typescript frontend
 - Delete deal function
 - Edit deal function
 
-- Make customer index page pretty
-- Make create customer page pretty
 - Make pricing table pretty

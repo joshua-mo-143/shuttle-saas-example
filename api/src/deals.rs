@@ -13,7 +13,7 @@ pub struct Deal {
     pub actual_worth: i32,
     pub status: String,
     pub closed: String,
-    pub customer_id: String,
+    pub customer_id: i32,
 }
 
 #[derive(Deserialize, Serialize, sqlx::FromRow)]

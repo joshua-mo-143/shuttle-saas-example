@@ -47,7 +47,6 @@ pub async fn register(
     }
 }
 
-#[axum_macros::debug_handler]
 pub async fn login(
     State(state): State<AppState>,
     jar: PrivateCookieJar,
