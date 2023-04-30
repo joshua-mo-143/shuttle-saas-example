@@ -3,73 +3,38 @@ import React from 'react'
 
 export default function Home() {
 
-  let [email, setEmail] = React.useState<string>("");
-   
-  const handleSubscribe = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
-
-    const url = `//${window.location.host}/api/subscribe`
-
-    try {
-      let res = await fetch(url, 
-        {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email
-          }),
-        })
-
-      if (res.ok) {
-        let meme = document.querySelector("#emailfeedback") as HTMLParagraphElement;
-        meme.innerHTML = "Subscribed."
-      }
-      
-    } catch(e: any) {
-      console.log(`Error: ${e}`)
-    }
-
-  }
-  
   return (
   <>
       <Layout>
-        <section className="my-10 flex flex-row justify-center gap-40">
-        <h1 className="text-2xl lg:text-3xl w-1/3">Manage your customers quicker and easier, without the hassle.</h1>
-        <p> Hello world! </p>
-        </section>
-              <section className="py-10">
-        <h1 className="text-2xl lg:text-5xl text-center py-10">About</h1>
-        <p>Zest CRM keeps ease of use in mind to let your manage your customers easily without information overload, while still providing powerful analytics that help you with your business. </p> 
-        <div className="flex flex-col justify-center items-center w-full">
-          <h1 className="py-10"> How can Zest help you? </h1>
-            <div className="w-4/5 grid grid-cols-3 grid-rows-1 items-center justify-center gap-10">
-              <div className="w-1/2 flex flex-row justify-center">
-                <p className="text-center">A simple dashboard that lets you see all your stats at a glance</p>
-                </div>
-                            <div className="w-1/2 flex flex-row justify-center">
-                <p className="text-center">A simple dashboard that lets you see all your stats at a glance</p>
-                </div>
-              <div className="w-1/2 flex flex-row justify-center">
-                <p className="text-center">API integrations to let you integrate Zest into your workflow seamlessly</p>
-                </div>
+          <section className="min-h-full py-20 w-full flex flex-col justify-center items-center gap-10">
+            <h1 className="text-3xl font-bold">Next.js + Rust SaaS Template</h1>
+            <div className="lg:w-1/2 grid grid-cols-2 auto-rows-fr justify-center items-center gap-10">
+            <div className="col-span-1 row-span-1 shadow-md px-10 py-5 h-max rounded-md border border-red text-center">
+              <h2 className="font-bold text-center text-xl">Deployed from Shuttle</h2>
+              <p> Deployed via Shuttle, a Rust-native cloud dev platform. </p>
+              <a href="https://www.shuttle.rs" target="_blank" className="text-blue-300 visited:text-blue-600 active:text-blue-400 transition-all">Learn more here</a>
 
-      </div>
-      </div>
-        </section>
-        <section className="flex flex-col items-center gap-8">
-            <p className="lg:text-3xl text-xl"> Subscribe to our mailing list and receive the latest updates. </p>
-          <form className="flex flex-row justify-center gap-4" onSubmit={(e) => handleSubscribe(e)}>
-            <input className="px-5 py-2" type="email" value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)}></input>
-            <button type="submit">Submit</button>
-      </form>
-          
-            <p id="emailresponse"></p>
-        </section>
+            </div>
+                        <div className="col-span-1 row-span-1 shadow-md px-10 py-5 h-max rounded-md border border-red text-center">
+              <h2 className="font-bold text-center text-xl">Learn About Rust</h2>
+              <p>Rust is a brilliant language for writing memory-safe, efficient software.</p>
+                <a href="https://doc.rust-lang.org/book/" target="_blank" className="text-blue-300 visited:text-blue-600 active:text-blue-400 transition-all">Learn more here</a>
+            </div>
 
+            <div className="col-span-1 row-span-1 shadow-md px-10 py-5 h-max rounded-md border border-red text-center">
+              <h2 className="font-bold text-center text-xl">Learn About Next.js</h2>
+              <p>Next.js is a React-based meta-framework at the forefront of JavaScript.</p>
+              <a href="https://nextjs.org/" target="_blank" className="text-blue-300 visited:text-blue-600 active:text-blue-400 transition-all">Learn more here</a>
+            </div>
+
+            <div className="col-span-1 row-span-1 shadow-md px-10 py-5 h-max rounded-md border border-red text-center">
+              <h2 className="font-bold text-center text-xl h-max">Join the community</h2>
+              <p>Join a thriving community with like-minded Rustaceans and web developers.</p>
+              <a href="https://discord.com/invite/shuttle" target="_blank" className="text-blue-300 visited:text-blue-600 active:text-blue-400 transition-all">Learn more here</a>
+            </div>
+
+          </div>
+    </section>
     </Layout>
   </>
   )

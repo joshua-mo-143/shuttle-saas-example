@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "rm -rf ./api/public && next dev",
-    "build": "next build",
+    "dev": "next dev",
+    "build": "rm -rf ./api/public && next build",
+    "full": "cargo shuttle run --working-directory api",
     "start": "next start",
     "lint": "next lint"
   },

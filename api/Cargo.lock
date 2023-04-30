@@ -123,7 +123,6 @@ dependencies = [
  "bcrypt",
  "http",
  "lettre",
- "mailgun-rs",
  "rand 0.8.5",
  "reqwest",
  "serde",
@@ -1422,17 +1421,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "abb12e687cfb44aa40f41fc3978ef76448f9b6038cad6aef4259d3c095a2382e"
 dependencies = [
  "cfg-if",
-]
-
-[[package]]
-name = "mailgun-rs"
-version = "0.1.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e0a84bc9a6846455a180a8380001db7180cb0e9436425dd7ea8c8306392ccd2"
-dependencies = [
- "reqwest",
- "serde",
- "serde_json",
 ]
 
 [[package]]

@@ -5,8 +5,8 @@ export default function Home() {
   return (
   <>
       <Layout>
-              <section className="my-10 flex flex-col justify-center items-center w-full">
-        <h1 className="text-2xl lg:text-5xl text-center">Pricing</h1>
+              <section className="py-10 flex flex-col justify-center items-center w-full">
+        <h1 className="text-xl lg:text-3xl text-center">Pricing</h1>
           <div className="grid grid-cols-3 grid-rows-1 gap-10 mx-10 py-10 w-4/5 justify-items-center">
             <div className="col-span-1 w-2/3 grid grid-cols-1 grid-rows-10 justify-center gap-2 justify-items-center text-center bg-sky-200 py-10 rounded-md">
               

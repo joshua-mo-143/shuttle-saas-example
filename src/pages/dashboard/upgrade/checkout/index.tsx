@@ -50,6 +50,16 @@ let router = useRouter();
   return (
     <>
       <Layout>
+        <div className="grid grid-cols-2 grid-rows-1 h-screen w-full">
+          <div className="py-10 flex flex-col gap-4 justify-center items-center">
+          <h1 className="text-3xl"> Checkout </h1>
+            <div className="text-left flex flex-col justify-center items-center gap-2">            
+              <p className="text-lg">You are buying:</p>
+            <hr className="border border-black w-40"/>
+            <p> Paid Membership - £11.99</p>
+        
+</div>
+          </div>
             <form className="py-10 flex flex-col gap-4 justify-center items-center" onSubmit={(e) => handleSubmit(e)}>
         <h1 className="lg:text-2xl text-xl text-center">Checkout</h1>
           <label htmlFor="name">
@@ -117,6 +127,7 @@ let router = useRouter();
 
           <button type="submit">Submit</button>
           </form>
+    </div>
     </Layout>
   </>
   )

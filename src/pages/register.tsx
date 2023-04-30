@@ -48,7 +48,7 @@ let router = useRouter();
   
   return (
       <Layout>
-            <form className="py-10 flex flex-col gap-4 justify-center items-center" onSubmit={handleSubmit}>
+            <form className="h-screen overflow-hidden flex flex-col gap-4 justify-center items-center" onSubmit={handleSubmit}>
         <h1 className="lg:text-2xl text-xl text-center">Register</h1>
         <label htmlFor="name" className="flex flex-row gap-4 items-center">
             <span>Name: </span>
