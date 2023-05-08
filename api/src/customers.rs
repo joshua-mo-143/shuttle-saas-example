@@ -1,10 +1,10 @@
+use axum::response::IntoResponse;
 use axum::{
     extract::{Path, State},
     http::StatusCode,
     Json,
 };
 use serde::{Deserialize, Serialize};
-use axum::response::IntoResponse;
 
 use crate::AppState;
 
@@ -16,6 +16,12 @@ pub struct Customer {
     pub email: String,
     pub phone: String,
     pub priority: i16,
+}
+
+#[derive(Deserialize, sqlx::FromRow, Serialize)]
+pub struct CustomerNames {
+    pub id: i32,
+    pub customer_name: String,
 }
 
 #[derive(Deserialize)]
@@ -58,9 +64,8 @@ pub async fn get_one_customer(
     Path(id): Path<String>,
     Json(req): Json<UserRequest>,
 ) -> Result<Json<Customer>, impl IntoResponse> {
-   
     let id = id.trim().parse::<i32>().unwrap();
-    
+
     match sqlx::query_as::<_, Customer>("SELECT id, firstname, lastname, email, phone, priority FROM customers WHERE owner_id = (SELECT id FROM users WHERE email = $1) AND id = $2")
 					.bind(req.email)
 					.bind(id)
@@ -112,7 +117,7 @@ pub async fn destroy_customer(
     Path(id): Path<String>,
     Json(req): Json<UserRequest>,
 ) -> Result<StatusCode, impl IntoResponse> {
-        let id = id.trim().parse::<i32>().unwrap();
+    let id = id.trim().parse::<i32>().unwrap();
 
     match sqlx::query("DELETE FROM customers WHERE owner_id = (SELECT id FROM users WHERE email = $1) AND id = $2")
 					.bind(req.email)
@@ -121,5 +126,18 @@ pub async fn destroy_customer(
 					.await {
         Ok(_) => Ok(StatusCode::OK),
         Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string()).into_response())
+					}
+}
+
+pub async fn get_customer_names(
+    State(state): State<AppState>,
+    Json(req): Json<UserRequest>,
+) -> Result<Json<Vec<CustomerNames>>, impl IntoResponse> {
+    match sqlx::query_as::<_, CustomerNames>("SELECT id, CONCAT(firstName, ' ', lastName) AS customer_name FROM customers WHERE owner_id = (SELECT id FROM users WHERE email = $1)")
+					.bind(req.email)
+					.fetch_all(&state.postgres)
+					.await {
+        Ok(res) => Ok(Json(res)),
+        Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))
 					}
 }

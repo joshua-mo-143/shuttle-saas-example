@@ -2,10 +2,13 @@ import React from "react"
 import Link from 'next/link'
 import {accountStore} from "@/zustandStore"
 import {useRouter} from 'next/router'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons'
 
 export default function Navbar() {
 
   const {email, changeEmail} = accountStore();
+  const [logoutVis, setLogoutVis] = React.useState<boolean>(false);
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -21,8 +24,8 @@ export default function Navbar() {
   }
 
   return (
-  <nav className="absolute w-screen h-10 flex flex-row items-center">
-      <ul className="m-5 flex gap-5 flex flex-row justify-end">
+  <nav className="absolute top-0 w-screen h-4 flex flex-row ">
+      <ul className="m-5 flex gap-5 flex flex-row">
     { email == "" ?
       <>
         <li><Link href="/">Home</Link></li>
@@ -31,10 +34,21 @@ export default function Navbar() {
       </> : 
       <>
         <li><Link href="/dashboard">Dashboard</Link></li>
-        <li><Link href="/dashboard/upgrade">Upgrade</Link></li>
-                  <li>Welcome back, {email}!</li>
+        <li><Link href="/dashboard/customers">Customers</Link></li>
+        <li><Link href="/dashboard/deals">Deals</Link></li>
 
-        <li><button onClick={handleLogout}>Log Out</button></li>
+        <li><Link href="/dashboard/upgrade">Upgrade</Link></li>
+                  <li>
+            <div onMouseEnter={() => setLogoutVis(true)} className="" onMouseLeave={() => setLogoutVis(false)}>
+          
+              <div className="flex flex-row gap-2 items-center">
+                <span>{email}</span>
+                 {logoutVis ? <FontAwesomeIcon icon={faChevronUp} className="text-xs"/> : <FontAwesomeIcon icon={faChevronDown} className="text-xs"/>}
+                </div>
+              <button className={logoutVis ? "text-right w-4/5" : "w-full text-center invisible"}onClick={handleLogout}>Log Out</button>
+              </div>
+            </li>
+
       </>}
     </ul>
   </nav>

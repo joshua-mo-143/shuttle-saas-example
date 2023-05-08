@@ -1,15 +1,13 @@
+use axum::body::{boxed, Body};
 use axum::extract::FromRef;
+use axum::http::{Response, StatusCode};
+use axum::routing::get;
+use axum::Router;
 use axum_extra::extract::cookie::Key;
 use sqlx::PgPool;
 use std::path::PathBuf;
-use axum::Router;
-use axum::routing::get;
-use axum::body::{boxed, Body};
-use axum::http::{Response, StatusCode};
 use tower::{ServiceBuilder, ServiceExt};
-use axum::routing::method_routing::{get_service, any_service};
-use tower_http::services::{ServeFile, ServeDir};
-use axum::response::Html;
+use tower_http::services::ServeDir;
 
 mod auth;
 mod customers;
@@ -40,7 +38,7 @@ impl FromRef<AppState> for Key {
 async fn axum(
     #[shuttle_shared_db::Postgres] postgres: PgPool,
     #[shuttle_secrets::Secrets] secrets: shuttle_secrets::SecretStore,
-    #[shuttle_static_folder::StaticFolder(folder = "public")] public: PathBuf
+    #[shuttle_static_folder::StaticFolder(folder = "public")] public: PathBuf,
 ) -> shuttle_axum::ShuttleAxum {
     let (stripe_key, mailgun_key, mailgun_url, domain) = grab_secrets(secrets);
 
@@ -54,19 +52,19 @@ async fn axum(
     };
 
     let api_router = create_api_router(state);
-                
+
     let router = Router::new()
-            .nest("/api", api_router)
-            .fallback_service(get(|req| async move {
+        .nest("/api", api_router)
+        .fallback_service(get(|req| async move {
             match ServeDir::new(public).oneshot(req).await {
                 Ok(res) => res.map(boxed),
                 Err(err) => Response::builder()
-                   .status(StatusCode::INTERNAL_SERVER_ERROR)
-                 .body(boxed(Body::from(format!("error: {err}"))))
-                 .expect("error response"),
-         }
-     }));
-    
+                    .status(StatusCode::INTERNAL_SERVER_ERROR)
+                    .body(boxed(Body::from(format!("error: {err}"))))
+                    .expect("error response"),
+            }
+        }));
+
     Ok(router.into())
 }
 

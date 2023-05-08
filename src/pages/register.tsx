@@ -1,6 +1,7 @@
 import Layout from "../components/Layout"
 import React from "react"
 import {useRouter} from 'next/router'
+import Link from 'next/link'
 
 export default function Register() {
   
@@ -50,32 +51,35 @@ let router = useRouter();
       <Layout>
             <form className="h-screen overflow-hidden flex flex-col gap-4 justify-center items-center" onSubmit={handleSubmit}>
         <h1 className="lg:text-2xl text-xl text-center">Register</h1>
-        <label htmlFor="name" className="flex flex-row gap-4 items-center">
-            <span>Name: </span>
-            <input type="text" name="name" className="px-5 py-2 shadow-md rounded-md bg-stone-100" value={name} onInput={(e) => setName((e.target as HTMLInputElement).value)}></input>
+        <fieldset className="grid grid-rows-auto grid-cols-1 justify-center items-center gap-4">
+        <label htmlFor="name" className="grid grid-cols-7 grid-rows-1 gap-4 items-center">
+            <span className="text-right col-span-2">Name: </span>
+            <input type="text" name="name" className="px-5 py-2 shadow-md rounded-md bg-stone-100 col-span-4" required value={name} onInput={(e) => setName((e.target as HTMLInputElement).value)}></input>
       </label>
 
-          <label htmlFor="email" className="flex flex-row gap-4 items-center">
-            <span>Email: </span>
-            <input type="email" name="email" className="px-5 py-2 shadow-md rounded-md bg-stone-100" value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)}></input>
+          <label htmlFor="email" className="grid grid-cols-7 grid-rows-1 gap-4 items-center">
+            <span className="text-right col-span-2">Email: </span>
+            <input type="email" name="email" className="px-5 py-2 shadow-md rounded-md bg-stone-100 col-span-4" required value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)}></input>
       </label>
-          <label htmlFor="password" className="flex flex-row gap-4 items-center">
-            <span>Password: </span>
-          <input type={pwVis ? "text" : "password"} name="password" className="px-5 py-2 shadow-md rounded-md bg-stone-100" value={pw} onInput={(e) => setPw((e.target as HTMLInputElement).value)}></input>
-            <button onClick={(e) => togglePassword(e)}>
+          <label htmlFor="password" className="grid grid-cols-7 grid-rows-1 gap-4 items-center">
+            <span className="text-right col-span-2">Password: </span>
+          <input type={pwVis ? "text" : "password"} name="password" className="px-5 py-2 shadow-md rounded-md bg-stone-100 col-span-4" required value={pw} onInput={(e) => setPw((e.target as HTMLInputElement).value)}></input>
+            <button onClick={(e) => togglePassword(e)} className="col-span-1">
 {pwVis ? <p>Hide</p> : <p>Show</p>}
             </button>
       </label>
           
-          <label htmlFor="confirm" className="flex flex-row gap-4 items-center">
-            <span>Confirm password: </span>
-          <input type={pwVis ? "text" : "password"} name="confirm" className="px-5 py-2 shadow-md rounded-md bg-stone-100" value={pwConfirm} onInput={(e) => setPwConfirm((e.target as HTMLInputElement).value)}></input>
-            <button onClick={(e) => togglePassword(e)}>
+          <label htmlFor="confirm" className="grid grid-cols-7 grid-rows-1 gap-4 items-center">
+            <span className="text-right col-span-2">Confirm:</span>
+          <input type={pwVis ? "text" : "password"} name="confirm" className="px-5 py-2 shadow-md rounded-md bg-stone-100 col-span-4" required value={pwConfirm} onInput={(e) => setPwConfirm((e.target as HTMLInputElement).value)}></input>
+            <button onClick={(e) => togglePassword(e)} className="col-span-1">
 {pwVis ? <p>Hide</p> : <p>Show</p>}
             </button>
       </label>
           
-          <button type="submit">Submit</button>
+          <button type="submit" className="rounded-md shadow-md bg-stone-200 text-center hover:bg-stone-100 transition-all px-5 py-2">Submit</button>
+          <Link href="/login" className="rounded-md shadow-md bg-stone-200 text-center hover:bg-stone-100 transition-all px-5 py-2">I have an account</Link>
+      </fieldset>
           </form>
     </Layout>
   )

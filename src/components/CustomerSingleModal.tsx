@@ -3,6 +3,8 @@ import React from "react"
 import { useRouter } from 'next/router'
 import {accountStore} from "@/zustandStore"
 import Link from 'next/link'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faMultiply} from '@fortawesome/free-solid-svg-icons'
 
 interface Customer {
   id: number,
@@ -55,10 +57,12 @@ const res = await fetch(url, {
     <>
     {vis ?
         <div className="w-screen h-screen backdrop-blur z-50 absolute">
-      <div className="py-10 flex flex-col items-center gap-4">        
+      <div className="py-10 relative flex flex-col items-center gap-4">      
     {data ?
         data.filter(a => a.id == id).map((item) => (
           <div key={item.id} className="px-10 py-4 bg-stone-200 flex rounded-md flex-col gap-2 w-4/5 h-[40rem]">
+
+      <button onClick={() => setVis(false)} className="text-right"><FontAwesomeIcon icon={faMultiply} className="hover:text-red-500 transition-all"/></button>  
           <p className="text-xl"> {item.firstname} {item.lastname} </p>
           <p> Email: {item.email} </p>
           <p> Phone: {item.phone} </p>

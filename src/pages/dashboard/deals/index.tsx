@@ -3,19 +3,20 @@ import React from "react"
 import { useRouter } from 'next/router'
 import {accountStore} from "../../../zustandStore"
 import Link from 'next/link'
-import CustomerSingleModal from '@/components/CustomerSingleModal'
 
-interface Customer {
+interface Deal {
   id: number,
-  firstname: string,
-  lastname: string,
-  email: string,
-  phone: string
+  estimate_worth: number,
+  actual_worth: number,
+  status: string,
+  closed: string,
+  customer_id: number,
+
 }
 
-export default function CustomerIndex() {
+export default function DealIndex() {
 
-  const [data, setData] = React.useState<Customer[]>([]);
+  const [data, setData] = React.useState<Deal[]>([]);
   const [id, setId] = React.useState<number>(1);
   const [vis, setVis] = React.useState<boolean>(false);
   const {email} = accountStore();
@@ -72,7 +73,6 @@ React.useEffect(() => {
 
     return (
       <Layout>
-      <CustomerSingleModal data={data} id={id} vis={vis} setVis={setVis}/>
       <div className="py-10 flex flex-col items-center gap-4">
         <h1 className="lg:text-3xl text-xl">View Deals</h1>
           <Link href="/dashboard/deals/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Deal</Link>
@@ -80,10 +80,9 @@ React.useEffect(() => {
       <div className="grid grid-cols-5 grid-rows-auto items-center gap-4">
       {data.map((cust) => (
         <div key={cust.id} className="px-10 py-4 bg-stone-200 flex flex-col gap-2">
-          <p className="text-lg"> {cust.firstname} {cust.lastname} </p>
-          <p> Email: {cust.email} </p>
-          <p> Phone: {cust.phone} </p>
-          <button data-id={cust.id} onClick={handleVis} className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">View More</button>
+          <p className="text-lg"> Hello world! </p>
+          <p> Email:  </p>
+          <p> Phone:  </p>
         </div>)
       )}
   </div>  

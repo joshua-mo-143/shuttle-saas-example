@@ -7,7 +7,7 @@ export default function PaymentSuccess() {
   return (
     <>
       <Layout>
-        <h1 className="text-2xl">Payment was successful!</h1>
+        <h1 className="text-2xl py-20 text-center">Payment was successful!</h1>
     </Layout>
   </>
   )

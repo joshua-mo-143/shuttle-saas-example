@@ -1,24 +1,20 @@
 ## Usty CRM 
 ### Introduction
-This repo is an example of a CRM SaaS written with a Next.js Typescript frontend and a Rust backend.
+This repo is meant to serve as a SaaS template with a Next.js Typescript frontend and a Rust backend.
 
 ### Features
 - Take subscription payments with Stripe
-- CRUD API for customers/contracts ("deals")
-- Email and OAuth (via Google) login
+- Email session-based login
 - Mailgun (email subscription, welcome email etc)
+- Pre-configured frontend routes for easy transition
 
-### Todo List
-#### Backend
-- Oauth? Not sure if this will be implemented.
-- Background task for deleting expired sessions from database
+### How to Use
+Pre-requisites: 
 
-#### Frontend
-- Edit customer function
-- Deal index page
-- Single deal page
-- Create deal page
-- Delete deal function
-- Edit deal function
+* Rust
 
-- Make pricing table pretty
+* Node.js/NPM.
+
+* [cargo-shuttle](https://www.shuttle.rs)
+
+Simply fork or clone, then use `npm i` to install your frontend dependencies and run `npm run full` to build your frontend assets into the backend and start the fullstack application and away you go!

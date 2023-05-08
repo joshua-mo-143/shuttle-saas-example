@@ -50,33 +50,34 @@ let router = useRouter();
   return (
     <>
       <Layout>
-        <div className="grid grid-cols-2 grid-rows-1 h-screen w-full">
+        <div className="grid grid-cols-2 grid-rows-1 h-screen w-[100%-10rem] divide-x-2 divide-black">
           <div className="py-10 flex flex-col gap-4 justify-center items-center">
           <h1 className="text-3xl"> Checkout </h1>
             <div className="text-left flex flex-col justify-center items-center gap-2">            
               <p className="text-lg">You are buying:</p>
             <hr className="border border-black w-40"/>
             <p> Paid Membership - £11.99</p>
-        
 </div>
           </div>
             <form className="py-10 flex flex-col gap-4 justify-center items-center" onSubmit={(e) => handleSubmit(e)}>
         <h1 className="lg:text-2xl text-xl text-center">Checkout</h1>
-          <label htmlFor="name">
-            <span>Name: </span>
-            <input type="text" name="name" required  className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={name} onInput={(e) => setName((e.target as HTMLInputElement).value)}></input>
+            
+            <fieldset className="grid grid-cols-1 grid-rows-auto justify-center items-center gap-4">
+          <label htmlFor="name" className="grid grid-cols-4 grid-rows-1 gap-4 items-center">
+            <span className="col-span-1 text-right">Name: </span>
+            <input type="text" name="name" required  className="col-span-3 px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={name} onInput={(e) => setName((e.target as HTMLInputElement).value)}></input>
       </label>
-          <label htmlFor="email">
-            <span>Payment e-mail: </span>
-            <input type="email" name="email" required  className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)}></input>
+          <label htmlFor="email" className="grid grid-cols-4 grid-rows-1 gap-4 items-center">
+            <span className="col-span-1 text-right">Payment e-mail: </span>
+            <input type="email" name="email" required  className="px-5 py-2 col-span-3 shadow-md rounded-md bg-stone-100 px-5 py-2" value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)}></input>
       </label>
-          <label htmlFor="card">
-            <span>Card number: </span>
-            <input type="text" name="card" required  className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" maxLength={16} minLength={16} value={card} onInput={(e) => setCard((e.target as HTMLInputElement).value)}></input>
+          <label htmlFor="card" className="grid grid-cols-4 grid-rows-1 gap-4 items-center">
+            <span className="col-span-1 text-right">Card number: </span>
+            <input type="text" name="card" required  className="px-5 py-2 col-span-3 shadow-md rounded-md bg-stone-100 px-5 py-2" maxLength={16} minLength={16} value={card} onInput={(e) => setCard((e.target as HTMLInputElement).value)}></input>
       </label>
-          <label htmlFor="exp_year">
-            <span>Expiry year: </span>
-            <select className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" id="year" name="exp_year" required  onChange={(e) => setYear((e.target as HTMLSelectElement).value)}>
+          <label htmlFor="exp_year" className="grid grid-cols-4 grid-rows-1 gap-4 items-center">
+            <span className="col-span-1 text-right">Expiry year: </span>
+            <select className="px-5 py-2 shadow-md rounded-md bg-stone-100 col-span-3 px-5 py-2" id="year" name="exp_year" required  onChange={(e) => setYear((e.target as HTMLSelectElement).value)}>
     <option value="">Please select</option>
     <option value="2023">2023</option>
     <option value="2024">2024</option>
@@ -101,9 +102,9 @@ let router = useRouter();
     <option value="2043">2043</option>
 </select>
       </label>
-          <label htmlFor="exp_month">
-            <span>Expiry month: </span>
-          <select name="exp_month" required  className="shadow-md rounded-md bg-stone-100 px-5 py-2" value={month} onChange={(e) => setMonth((e.target as HTMLSelectElement).value)}>
+          <label htmlFor="exp_month" className="grid grid-cols-4 grid-rows-1 gap-4 items-center">
+            <span className="col-span-1 text-right">Expiry month: </span>
+          <select name="exp_month" required  className="col-span-3 shadow-md rounded-md bg-stone-100 px-5 py-2" value={month} onChange={(e) => setMonth((e.target as HTMLSelectElement).value)}>
               <option value="">month</option>
     <option value="1">January</option>
     <option value="2">February</option>
@@ -119,13 +120,15 @@ let router = useRouter();
     <option value="12">December</option>
             </select>
       </label>
-                    <label htmlFor="cvc">
-            <span>Expiry year: </span>
-            <input type="password" name="cvc" required  maxLength={3} className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={cvc} onInput={(e) => setCvc((e.target as HTMLInputElement).value)}></input>
+                    <label htmlFor="cvc" className="grid grid-cols-4 grid-rows-1 gap-4 items-center">
+            <span className="col-span-1 text-right">CVC: </span>
+            <input type="password" name="cvc" required  maxLength={3} className="col-span-3 px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={cvc} onInput={(e) => setCvc((e.target as HTMLInputElement).value)}></input>
         
       </label>
 
-          <button type="submit">Submit</button>
+          <button type="submit" className="rounded-md shadow-md bg-stone-200 hover:bg-stone-100 transition-all px-5 py-2">Submit</button>
+        
+      </fieldset>
           </form>
     </div>
     </Layout>
