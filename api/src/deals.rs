@@ -56,7 +56,7 @@ pub async fn get_all_deals(
         d.closed, 
         (select concat(c.firstname, ' ', c.lastname) from customers WHERE id = d.customer_id) as customer_name
         FROM deals d LEFT JOIN customers c ON d.customer_id = c.id WHERE c.owner_id = (SELECT id FROM users WHERE email = $1)")
-					.bind(req.email)
+					.bind(req.email) 
 					.fetch_all(&state.postgres)
 					.await {
         Ok(res) => Ok(Json(res)),
@@ -69,16 +69,23 @@ pub async fn get_one_deal(
     State(state): State<AppState>,
     Path(id): Path<i32>,
     Json(req): Json<UserRequest>,
-) -> Result<Json<DealDetailed>, StatusCode> {
-    let Ok(deal) = sqlx::query_as::<_, DealDetailed>("SELECT id, estimate_worth, status, closed, customer_id FROM deals WHERE owner_id = (SELECT user_id FROM users WHERE email = $1) AND id = $2")
+) -> Result<Json<Deal>, StatusCode> {
+    match sqlx::query_as::<_, DealDetailed>(
+        "SELECT 
+        d.id, 
+        d.estimate_worth, 
+        d.status, 
+        d.closed, 
+        (select concat(c.firstname, ' ', c.lastname) from customers WHERE id = d.customer_id) as customer_name
+        FROM deals d LEFT JOIN customers c ON d.customer_id = c.id WHERE c.owner_id = (SELECT id FROM users WHERE email = $1) AND d.id = $2"
+    )
 					.bind(req.email)
 					.bind(id)
 					.fetch_one(&state.postgres)
-					.await else {
-						return Err(StatusCode::INTERNAL_SERVER_ERROR)
-					};
-
-    Ok(Json(deal))
+					.await  {
+        Ok(res) => Ok(Json(res)),
+        Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))
+					}
 }
 
 pub async fn create_deal(
@@ -94,7 +101,7 @@ pub async fn create_deal(
 		return Err(StatusCode::INTERNAL_SERVER_ERROR)
 	};
 
-    Ok(StatusCode::INTERNAL_SERVER_ERROR)
+    Ok(StatusCode::OK)
 }
 
 pub async fn edit_deal(
