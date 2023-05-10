@@ -12,10 +12,9 @@ use crate::AppState;
 pub struct Deal {
     pub id: i32,
     pub estimate_worth: i32,
-    pub actual_worth: Option<i32>,
     pub status: String,
     pub closed: String,
-    pub customer_name: Option<String>,
+    pub customer_name: String,
 }
 
 #[derive(Deserialize, Serialize, sqlx::FromRow)]
@@ -53,7 +52,6 @@ pub async fn get_all_deals(
     match sqlx::query_as::<_, Deal>("SELECT 
         d.id, 
         d.estimate_worth, 
-        d.actual_worth, 
         d.status, 
         d.closed, 
         (select concat(c.firstname, ' ', c.lastname) from customers WHERE id = d.customer_id) as customer_name
