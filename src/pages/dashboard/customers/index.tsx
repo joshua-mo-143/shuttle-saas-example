@@ -1,99 +1,159 @@
-import Layout from "../../../components/Layout"
-import React from "react"
-import { useRouter } from 'next/router'
-import {accountStore} from "../../../zustandStore"
-import Link from 'next/link'
-import CustomerSingleModal from '@/components/CustomerSingleModal'
+import Layout from '../../../components/Layout';
+import React from 'react';
+import { useRouter } from 'next/router';
+import { accountStore } from '../../../zustandStore';
+import Link from 'next/link';
+import CustomerSingleModal from '@/components/CustomerSingleModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface Customer {
-  id: number,
-  firstname: string,
-  lastname: string,
-  email: string,
-  phone: string
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
 }
 
 export default function CustomerIndex() {
-
   const [data, setData] = React.useState<Customer[]>([]);
   const [id, setId] = React.useState<number>(1);
   const [vis, setVis] = React.useState<boolean>(false);
-  const {email} = accountStore();
+  const { email } = accountStore();
 
   let router = useRouter();
 
   const handleVis = (e: React.SyntheticEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const element = e.target as HTMLButtonElement;
-  const customerId = element.getAttribute("data-id");
+    const customerId = element.getAttribute('data-id');
 
-  // @ts-ignore
-    const customerIdAsInt = parseInt(customerId)
-    setId(customerIdAsInt)
-    setVis(true)
-  }
-  
-React.useEffect(() => {
+    // @ts-ignore
+    const customerIdAsInt = parseInt(customerId);
+    setId(customerIdAsInt);
+    setVis(true);
+  };
+
+  React.useEffect(() => {
     const fetchData = async () => {
-
-     const url = `//${window.location.host}/api/customers`
+      const url = `//${window.location.host}/api/customers`;
 
       try {
-        const res = await fetch(url,
-        {
-            method: "POST",
-            mode: "cors",
-            headers: new Headers({
-              "Content-Type": "application/json"
-            }),
-            
-            body: JSON.stringify({
-            email: email
-          })
-          },
-        );
+        const res = await fetch(url, {
+          method: 'POST',
+          mode: 'cors',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+          }),
+
+          body: JSON.stringify({
+            email: email,
+          }),
+        });
 
         if (res.status == 403) {
-          return router.push("/login");
+          return router.push('/login');
         }
-      
-        const data = await res.json()
+
+        const data = await res.json();
 
         setData(data);
-
       } catch (e: any) {
         console.log(`Error: ${e}`);
       }
     };
-    fetchData()
+    fetchData();
   }, [email, router]);
-    
 
-    return (
-      <Layout>
-      <CustomerSingleModal data={data} id={id} vis={vis} setVis={setVis}/>
-      <div className="py-10 flex flex-col items-center gap-4 w-full">
-        <h1 className="lg:text-3xl text-xl font-bold">View Customers</h1>
-          <Link href="/dashboard/customers/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Customer</Link>
-    {data ?
-      <div className="mx-5 grid grid-cols-1 grid-rows-auto items-center w-4/5 gap-4">
-      {data.map((cust) => (
-        <div key={cust.id} className="px-10 py-4 bg-slate-500 grid grid-cols-7 grid-rows-1 items-center gap-2 rounded-md">
-          <p className="text-lg col-span-2"> {cust.firstname} {cust.lastname} </p>
-          <p className="col-span-2"> Email: {cust.email} </p>
-          <p className="col-span-2"> Phone: {cust.phone} </p>
-          <button data-id={cust.id} onClick={handleVis} className="px-5 py-2 bg-slate-300 hover:bg-stone-200 transition-all mt-4 rounded-md">View More</button>
+  const handleDelete = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const url = `//${window.location.host}/api/customers/${id}`;
+
+    try {
+      const res = await fetch(url, {
+        mode: 'cors',
+        method: 'DELETE',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
+
+      if (res.ok) {
+        router.reload();
+      }
+    } catch (e: any) {
+      console.log(`Error: ${e}`);
+    }
+  };
+
+  return (
+    <Layout>
+      <CustomerSingleModal data={data} id={id} vis={vis} setVis={setVis} />
+      <div className="py-10 flex flex-col gap-4 w-full px-24 items-start">
+        <div>
+          <h2 className="text-2xl font-semibold leading-tight my-10">Customers</h2>
         </div>
-          )
-      )}
-  </div>  
-    : null }
-
+        <table className="min-w-full leading-normal">
+          <thead>
+            <tr>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Customer
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Email
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Phone Number
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                More Info
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((cust) => (
+              <tr key={cust.id}>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <div className="flex items-center">
+                    <div className="ml-3">
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {cust.firstname} {cust.lastname}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p className="text-gray-900 whitespace-no-wrap">{cust.email}</p>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p className="text-gray-900 whitespace-no-wrap">{cust.phone}</p>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
+                    <button
+                      data-id={cust.id}
+                      onClick={handleDelete}
+                      className="px-5 py-2 hover:bg-red-700 transition-all mt-4 rounded-md text-white bg-red-500"
+                    >
+                      <FontAwesomeIcon icon={faTrash} color="white" /> Delete Customer
+                    </button>
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Link
+          href="/dashboard/customers/create"
+          className="transition-all mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          <FontAwesomeIcon icon={faPlus} color="white" /> Add Customer
+        </Link>
       </div>
-      
-          </Layout>
-  )
+    </Layout>
+  );
 }
-
-

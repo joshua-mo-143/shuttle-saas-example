@@ -63,7 +63,7 @@ export default function Navbar() {
             </Link>
             <Link
               className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
-              href="/dashboard/customers"
+              href="/dashboard/deals"
             >
               <FontAwesomeIcon icon={faHandshake} color="rgb(59 130 246)" />
 

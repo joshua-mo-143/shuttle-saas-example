@@ -66,8 +66,7 @@ export default function Home() {
           py-8
           rounded-3xl
           w-50
-          max-w-md
-        "
+          max-w-md"
           >
             <h1 className="lg:text-2xl text-xl text-center">Welcome Back</h1>
             <fieldset className="mt-10">
