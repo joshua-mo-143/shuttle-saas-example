@@ -1,29 +1,27 @@
-import Navbar from "./navbar"
-import React from "react"
-import Head from "next/head"
-import {accountStore} from '@/zustandStore'
-import {useRouter} from 'next/router'
+import Navbar from './navbar';
+import React from 'react';
+import Head from 'next/head';
+import { accountStore } from '@/zustandStore';
+import { useRouter } from 'next/router';
 
 type Props = {
-  children: React.ReactNode | React.ReactNode[]
-}
+  children: React.ReactNode | React.ReactNode[];
+};
 
-export default function Layout({children}: Props) {
-
+export default function Layout({ children }: Props) {
   let router = useRouter();
-  let {email} = accountStore();
+  let { email } = accountStore();
 
   React.useEffect(() => {
-    if (router.pathname.includes(`${window.location.host}/dashboard`) && email == "") {
-      router.push("/login");
+    if (router.pathname.includes(`${window.location.host}/dashboard`) && email == '') {
+      router.push('/login');
     }
-  }, [router.pathname])  
+  }, [email, router, router.pathname]);
 
-  
   return (
     <div className="min-h-screen flex-col items-center">
-      <Navbar/>
+      <Navbar />
       {children}
-  </div>
-  )
+    </div>
+  );
 }
