@@ -69,7 +69,7 @@ pub async fn get_one_deal(
     State(state): State<AppState>,
     Path(id): Path<i32>,
     Json(req): Json<UserRequest>,
-) -> Result<Json<Deal>, StatusCode> {
+) -> Result<Json<DealDetailed>, StatusCode> {
     match sqlx::query_as::<_, DealDetailed>(
         "SELECT 
         d.id, 
@@ -84,7 +84,7 @@ pub async fn get_one_deal(
 					.fetch_one(&state.postgres)
 					.await  {
         Ok(res) => Ok(Json(res)),
-        Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))
+        Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR)
 					}
 }
 

@@ -1,6 +1,6 @@
 use axum::{extract::State, http::StatusCode, response::IntoResponse, Json};
 use serde::{Deserialize, Serialize};
-use time::Date;
+// use time::Date;
 
 use crate::AppState;
 
@@ -16,13 +16,13 @@ pub struct SalesDealsInfo {
     ready: i64,
     awaitingresponse: i64,
     closed: i64,
-    total_amt_closed: i64,
+    total_amt_closed: Option<i64>,
 }
 
 #[derive(Deserialize, Serialize, sqlx::FromRow)]
 pub struct SalesPerDayInfo {
     date: String,
-    sales_total: i64
+    sales_total: i64,
 }
 
 #[derive(Deserialize, Serialize, sqlx::FromRow)]
@@ -48,13 +48,14 @@ pub async fn get_dashboard_data(
         COUNT(*) FILTER (WHERE status = 'closed') AS closed,
         SUM(estimate_worth) FILTER (where status = 'closed') AS total_amt_closed
         FROM deals
-        WHERE owner_id = (SELECT id FROM users WHERE email = $1)"
+        WHERE owner_id = (SELECT id FROM users WHERE email = $1)",
     )
     .bind(&req.email.to_string())
     .fetch_one(&state.postgres)
-    .await {
+    .await
+    {
         Ok(res) => res,
-        Err(err) => return Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))
+        Err(err) => return Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
     };
 
     let sales_per_day_info = match sqlx::query_as::<_, SalesPerDayInfo>(
@@ -64,16 +65,18 @@ pub async fn get_dashboard_data(
         FROM deals
         WHERE status = 'closed'
         GROUP BY deals.last_updated
-        "
+        ",
     )
     .bind(req.email)
     .fetch_all(&state.postgres)
-    .await {
+    .await
+    {
         Ok(res) => res,
-        Err(err) => return Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))
+        Err(err) => return Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string())),
     };
 
     Ok(Json(DashboardData {
-     sales_deals_info, sales_per_day_info   
+        sales_deals_info,
+        sales_per_day_info,
     }))
 }
