@@ -1,81 +1,86 @@
-import Layout from "@/components/Layout"
-import React from "react"
-import { useRouter } from 'next/router'
-import {accountStore} from "@/zustandStore"
-import Link from 'next/link'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faMultiply} from '@fortawesome/free-solid-svg-icons'
+import Layout from '@/components/Layout';
+import React from 'react';
+import { useRouter } from 'next/router';
+import { accountStore } from '@/zustandStore';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMultiply } from '@fortawesome/free-solid-svg-icons';
 
 interface Customer {
-  id: number,
-  firstname: string,
-  lastname: string,
-  email: string,
-  phone: string
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
 }
 
 type Props = {
-  id: number,
-  data: Customer[],
-  vis: boolean,
-  setVis: React.Dispatch<React.SetStateAction<boolean>>
-}
+  id: number;
+  data: Customer[];
+  vis: boolean;
+  setVis: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-export default function CustomerSingle({data, id, vis, setVis}: Props) {
+export default function CustomerSingle({ data, id, vis, setVis }: Props) {
+  const { email } = accountStore();
 
-  const {email} = accountStore();
-		
   let router = useRouter();
 
- const handleDelete = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
-        const url = `//${window.location.host}/api/customers/${id}`
+  const handleDelete = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const url = `//${window.location.host}/api/customers/${id}`;
 
     try {
-      
-const res = await fetch(url, {
-      mode: 'cors',
-      method: 'DELETE',
-      headers: new Headers({
-          "Content-Type": "application/json"
+      const res = await fetch(url, {
+        mode: 'cors',
+        method: 'DELETE',
+        headers: new Headers({
+          'Content-Type': 'application/json',
         }),
         body: JSON.stringify({
-          email: email
-        })
-    });
+          email: email,
+        }),
+      });
 
-  if (res.ok) {
-    router.reload()
+      if (res.ok) {
+        router.reload();
       }
     } catch (e: any) {
-      console.log(`Error: ${e}`)
+      console.log(`Error: ${e}`);
     }
-    
-      }    
+  };
 
-    return (
-    <>
-    {vis ?
-        <div className="w-full h-screen backdrop-blur z-50 absolute">
-      <div className="py-10 relative flex flex-col items-center gap-4">      
-    {data ?
-        data.filter(a => a.id == id).map((item) => (
-          <div key={item.id} className="px-10 py-4 bg-stone-200 flex rounded-md flex-col gap-2 w-4/5 h-[40rem]">
+  if (!vis) return null;
 
-      <button onClick={() => setVis(false)} className="text-right"><FontAwesomeIcon icon={faMultiply} className="text-2xl hover:text-red-500 transition-all"/></button>  
-          <p className="text-xl"> {item.firstname} {item.lastname} </p>
-          <p> Email: {item.email} </p>
-          <p> Phone: {item.phone} </p>
-          <button onClick={(e) => handleDelete(e)} className="px-5 py-2">Delete Customer</button>
-        </div>))
-      :
-         <p>Customer does not exist :(</p> }
+  const customer = data.find((a) => a.id == id);
 
+  if (!customer) return <p>Customer does not exist :(</p>;
+
+  return (
+    <div className="w-full h-screen backdrop-blur z-50 absolute">
+      <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400 flex items-center justify-center">
+        <div>
+          <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Customer details</h1>
+
+          <button onClick={() => setVis(false)} className="text-right">
+            <FontAwesomeIcon
+              icon={faMultiply}
+              className="text-2xl hover:text-red-500 transition-all"
+              color="rgb(59 130 246)"
+            />
+          </button>
+        </div>
+        <div className="space-y-2">
+          <p className="text-xl">
+            Name: {customer.firstname} {customer.lastname}
+          </p>
+          <p> Email: {customer.email} </p>
+          <p> Phone: {customer.phone} </p>
+        </div>
+        <button onClick={(e) => handleDelete(e)} className="bg-red-800 px-5 py-2 text-white">
+          Delete Customer
+        </button>
       </div>
-  </div> :null }
-  </>
-    )
+    </div>
+  );
 }
-
-
-

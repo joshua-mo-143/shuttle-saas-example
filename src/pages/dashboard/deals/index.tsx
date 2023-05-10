@@ -1,139 +1,149 @@
-import Layout from "../../../components/Layout"
-import React from "react"
-import { useRouter } from 'next/router'
-import {accountStore} from "../../../zustandStore"
-import Link from 'next/link'
+import Layout from '../../../components/Layout';
+import React from 'react';
+import { useRouter } from 'next/router';
+import { accountStore } from '../../../zustandStore';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 interface Deal {
-  id: number,
-  estimate_worth: number,
-  actual_worth: number,
-  status: string,
-  closed: string,
-  customer_id: number,
-  customer_name: String
+  id: number;
+  estimate_worth: number;
+  actual_worth: number;
+  status: string;
+  closed: string;
+  customer_id: number;
+  customer_name: String;
 }
 
 export default function DealIndex() {
-
   const [data, setData] = React.useState<Deal[]>([]);
-  const [id, setId] = React.useState<number>(1);
-  const [vis, setVis] = React.useState<boolean>(false);
-  const {email} = accountStore();
+  const { email } = accountStore();
 
   let router = useRouter();
 
-  const handleVis = (e: React.SyntheticEvent) => {
-    e.preventDefault()
-
-    const element = e.target as HTMLButtonElement;
-  const customerId = element.getAttribute("data-id");
-
-  // @ts-ignore
-    const customerIdAsInt = parseInt(customerId)
-    setId(customerIdAsInt)
-    setVis(true)
-  }
-
   const handleStatus = async (e: React.SyntheticEvent) => {
-  e.preventDefault()
+    e.preventDefault();
 
-  let element = e.target as HTMLSelectElement;
+    let element = e.target as HTMLSelectElement;
 
-  let id = element.getAttribute("data-id");
-  let status = element.value;
-    
-    const url = `//${window.location.host}/api/deals/${id}`
-    
+    let id = element.getAttribute('data-id');
+    let status = element.value;
+
+    const url = `//${window.location.host}/api/deals/${id}`;
+
     try {
-      const res = await fetch(url,
-      {
-        method: "PUT",
-        mode: "cors",
+      const res = await fetch(url, {
+        method: 'PUT',
+        mode: 'cors',
         headers: new Headers({
-            "Content-Type": "application/json"
-          }),
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify({
-            new_value: status,
-            email: email,
-          })
+          new_value: status,
+          email: email,
+        }),
       });
 
       if (res.ok) {
         element.value = status;
       }
-    } catch(e: any) {
-      console.log(e.message)
+    } catch (e: any) {
+      console.log(e.message);
     }
-  }
-  
-React.useEffect(() => {
-    const fetchData = async () => {
+  };
 
-     const url = `//${window.location.host}/api/deals`
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const url = `//${window.location.host}/api/deals`;
 
       try {
-        const res = await fetch(url,
-        {
-            method: "POST",
-            mode: "cors",
-            headers: new Headers({
-              "Content-Type": "application/json"
-            }),
-            
-            body: JSON.stringify({
-            email: email
-          })
-          },
-        );
+        const res = await fetch(url, {
+          method: 'POST',
+          mode: 'cors',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+          }),
+
+          body: JSON.stringify({
+            email: email,
+          }),
+        });
 
         if (res.status == 403) {
-          return router.push("/login");
+          return router.push('/login');
         }
-      
-        const data = await res.json()
+
+        const data = await res.json();
 
         setData(data);
-
       } catch (e: any) {
         console.log(`Error: ${e}`);
       }
     };
-    fetchData()
+    fetchData();
   }, [email, router]);
-    
 
-    return (
-      <Layout>
-      <div className="py-10 flex flex-col items-center gap-4">
-        <h1 className="lg:text-3xl text-xl font-bold">View Deals</h1>
-          <Link href="/dashboard/deals/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Deal</Link>
-    {data ?
-        <>
-      {data.map((deal) => (
-        <div key={deal.id} className="px-10 py-4 bg-slate-500 grid grid-cols-7 grid-rows-1 items-center gap-2 rounded-md">
-          <p className="text-lg col-span-2"> {deal.customer_name} </p>
-          <p className="col-span-2"> Sale amount: £{deal.estimate_worth}.00 </p>
-          <div className="col-span-2">
-                 <span> Status: </span>
-                 
-                <select className="text-center bg-slate-500 rounded-md" data-id={deal.id} value={deal.status} onChange={(e: React.SyntheticEvent) => handleStatus(e)}>
-                  <option value="open">Open</option>
-                  <option value="awaitingresponse">Awaiting Response</option>
-                  <option value="ready">Ready to close</option>
-                  <option value="closed">Closed</option>
-                  </select>
-                 </div>
+  return (
+    <Layout>
+      <div className="py-10 flex flex-col gap-4 w-full px-24 items-start">
+        <div>
+          <h2 className="text-2xl font-semibold leading-tight my-10">Deals</h2>
         </div>
-        )
-      )}
-    </>
-    : null }
 
+        <table className="min-w-full leading-normal">
+          <thead>
+            <tr>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Customer
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Invoice Amount
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Status
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {data.map((deal) => (
+              <tr key={deal.id}>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <div className="flex items-center">
+                    <div className="ml-3">
+                      <p className="text-gray-900 whitespace-no-wrap">{deal.customer_name}</p>
+                    </div>
+                  </div>
+                </td>
+
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p className="text-gray-900 whitespace-no-wrap">£{deal.estimate_worth}.00</p>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <select
+                    className="text-gray-900 whitespace-no-wrap bg-white"
+                    data-id={deal.id}
+                    value={deal.status}
+                    onChange={(e: React.SyntheticEvent) => handleStatus(e)}
+                  >
+                    <option value="open">Open</option>
+                    <option value="awaitingresponse">Awaiting Response</option>
+                    <option value="ready">Ready to close</option>
+                    <option value="closed">Closed</option>
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Link
+          href="/dashboard/deals/create"
+          className="transition-all mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          <FontAwesomeIcon icon={faPlus} color="white" /> Create Deal
+        </Link>
       </div>
-      
-          </Layout>
-  )
+    </Layout>
+  );
 }
-
-

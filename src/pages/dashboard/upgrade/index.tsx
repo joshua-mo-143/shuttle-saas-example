@@ -1,59 +1,87 @@
-import Layout from "@/components/Layout"
-import Link from 'next/link'
+import Layout from '@/components/Layout';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-  <>
+    <>
       <Layout>
-              <section className="py-10 flex flex-col justify-center items-center w-full">
-        <h1 className="text-xl lg:text-3xl text-center">Pricing</h1>
-          <div className="grid grid-cols-3 grid-rows-1 gap-10 mx-10 py-10 w-4/5 justify-items-center">
-            <div className="col-span-1 w-2/3 grid grid-cols-1 grid-rows-10 justify-center gap-2 justify-items-center text-center py-10 rounded-md shadow-md bg-slate-500">
-              
-              <p className="lg:text-3xl text-xl row-span-2">Basic</p>
-              <ul className="row-span-8 text-lg">
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-               <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-          </ul>
-              <p className="text-xl">This is you!</p>
-              </div>
-            <div className="col-span-1 w-2/3 grid grid-cols-1 grid-rows-10 justify-center gap-2 justify-items-center text-center py-10 rounded-md shadow-md bg-slate-500">
-              
-              <p className="lg:text-3xl text-xl row-span-2">Premium</p>
-              <ul className="row-span-8 text-lg">
-              <li>Everything in Basic!</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Only £11.99 a month!</li>
-          </ul>
-                  <Link href="/dashboard/upgrade/checkout" className="bg-stone-200 w-max px-10 py-4 self-center row-span-1 hover:bg-stone-100 transition-all">Pay</Link>
-              </div>
+        <section className="py-10 flex flex-col justify-center items-center w-full">
+          <h1 className="text-xl lg:text-3xl text-center my-10">Pricing</h1>
 
-            <div className="col-span-1 w-2/3 grid grid-cols-1 grid-rows-10 justify-center gap-2 justify-items-center text-center py-10 rounded-md shadow-md bg-slate-500">
-              
-              <p className="lg:text-3xl text-xl row-span-2">Corporate</p>
-              <ul className="row-span-8 text-lg">
-                <li>Everything in Premium!</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Lorem ipsum</li>
-              <li>Only £11.99 a month!</li>
-          </ul>
-                  <Link href="/dashboard/upgrade/checkout" className="bg-stone-200 w-max px-10 py-4 self-center row-span-1 hover:bg-stone-100 transition-all">Pay</Link>
-              </div>
+          <div className="dark:bg-gray-800">
+            <div className="container px-6 py-8 mx-auto">
+              <div className="flex flex-col items-center justify-center space-y-8 lg:-mx-4 lg:flex-row lg:items-stretch lg:space-y-0">
+                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border-2 border-gray-200 rounded-lg lg:mx-4 dark:bg-gray-800 dark:border-gray-700 shadow-md">
+                  <div className="flex-shrink-0">
+                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-blue-400 uppercase rounded-lg bg-gray-50 dark:bg-gray-700">
+                      Casual
+                    </h2>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <span className="pt-2 text-4xl font-bold text-gray-800 uppercase dark:text-gray-100">Free</span>
+                  </div>
+                  <ul className="flex-1 space-y-4">
+                    <li className="text-gray-500 dark:text-gray-400">Up to 5 projects</li>
+                    <li className="text-gray-500 dark:text-gray-400">Up to 10 collaborators</li>
+                    <li className="text-gray-500 dark:text-gray-400">2Gb of storage</li>
+                  </ul>
 
-      </div>
+                  <span>This is you</span>
+                </div>
+
+                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border-2 border-gray-200 rounded-lg lg:mx-4 dark:bg-gray-800 dark:border-gray-700 shadow-md">
+                  <div className="flex-shrink-0">
+                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-blue-400 uppercase rounded-lg bg-gray-50 dark:bg-gray-700">
+                      Profesional
+                    </h2>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <span className="pt-2 text-4xl font-bold text-gray-800 uppercase dark:text-gray-100">$24.90</span>
+                    <span className="text-gray-500 dark:text-gray-400">/month</span>
+                  </div>
+                  <ul className="flex-1 space-y-4">
+                    <li className="text-gray-500 dark:text-gray-400">Up to 10 projects</li>
+                    <li className="text-gray-500 dark:text-gray-400">Up to 20 collaborators</li>
+                    <li className="text-gray-500 dark:text-gray-400">10Gb of storage</li>
+                    <li className="text-gray-500 dark:text-gray-400">Real-time collaborations</li>
+                  </ul>
+
+                  <Link href="/dashboard/upgrade/checkout">
+                    <a className="inline-flex items-center justify-center px-4 py-2 font-semibold text-white uppercase transition-colors bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none">
+                      Upgrade
+                    </a>
+                  </Link>
+                </div>
+
+                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border-2 border-gray-200 rounded-lg lg:mx-4 dark:bg-gray-800 dark:border-gray-700 shadow-md">
+                  <div className="flex-shrink-0">
+                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-blue-400 uppercase rounded-lg bg-gray-50 dark:bg-gray-700">
+                      Expert
+                    </h2>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <span className="pt-2 text-4xl font-bold text-gray-800 uppercase dark:text-gray-100">$49.90</span>
+                    <span className="text-gray-500 dark:text-gray-400">/month</span>
+                  </div>
+                  <ul className="flex-1 space-y-4">
+                    <li className="text-gray-500 dark:text-gray-400">Unlimited projects</li>
+                    <li className="text-gray-500 dark:text-gray-400">Unlimited collaborators</li>
+                    <li className="text-gray-500 dark:text-gray-400">Unlimited storage</li>
+                    <li className="text-gray-500 dark:text-gray-400">Real-time collaborations</li>
+                    <li className="text-gray-500 dark:text-gray-400">24x7 Support</li>
+                  </ul>
+
+                  <Link href="/dashboard/upgrade/checkout">
+                    <a className="inline-flex items-center justify-center px-4 py-2 font-semibold text-white uppercase transition-colors bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none">
+                      Upgrade
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
-
-    </Layout>
-  </>
-  )
+      </Layout>
+    </>
+  );
 }

@@ -1,60 +1,98 @@
-import React from "react"
-import Link from 'next/link'
-import {accountStore} from "@/zustandStore"
-import {useRouter} from 'next/router'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import Link from 'next/link';
+import { accountStore } from '@/zustandStore';
+import { useRouter } from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronDown,
+  faChevronUp,
+  faCoins,
+  faGauge,
+  faGaugeSimple,
+  faHandshake,
+  faRightFromBracket,
+  faRocket,
+  faUserCircle,
+  faUserSecret,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
+import Navigation from './Navigation';
 
 export default function Navbar() {
-
-  const {email, changeEmail} = accountStore();
+  const { email, changeEmail } = accountStore();
   const [logoutVis, setLogoutVis] = React.useState<boolean>(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const handleLogout = async () => {
-
     const url = `//${window.location.host}/api/auth/logout`;
-    
+
     const res = await fetch(url);
 
     if (res.ok) {
-    changeEmail("");
-    router.push("/");
+      changeEmail('');
+      router.push('/');
     }
-  }
+  };
+
+  if (email === '') return <Navigation />;
 
   return (
-  <>
-    { email == "" ?
-  <nav className="absolute z-10 top-0 w-screen h-4 flex flex-row ">
-      <ul className="m-5 flex gap-5 flex flex-row">
-    
-        <li><Link href="/">Home</Link></li>
-        <li><Link href="/login">Log In</Link></li>
-        <li><Link href="/register">Register</Link></li>
+    <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+      <Link href="/">
+        <FontAwesomeIcon icon={faRocket} size="3x" color="rgb(59 130 246)" />
+      </Link>
+      <div className="flex flex-col justify-between flex-1 mt-6">
+        <nav className="-mx-3 space-y-6 flex flex-col justify-between h-full">
+          <div className="space-y-3">
+            <Link
+              className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              href="/dashboard"
+            >
+              <FontAwesomeIcon icon={faGauge} color="rgb(59 130 246)" />
 
-    </ul>
-  </nav>
-      : 
-      <>
-          <nav className="w-[15%] text-stone-100 min-h-screen flex flex-row items-top bg-blue-950">
-      <ul className="m-5 flex gap-5 flex flex-col">
-            <li>
-              
-          <h1 className="py-10">Logo</h1>
-              </li>
-                  <li>{email}</li>
-        <li><Link href="/dashboard">Dashboard</Link></li>
-        <li><Link href="/dashboard/customers">Customers</Link></li>
-        <li><Link href="/dashboard/deals">Deals</Link></li>
+              <span className="mx-2 text-sm font-medium">Dashboard</span>
+            </Link>
 
-        <li><Link href="/dashboard/upgrade">Upgrade</Link></li>
-            <li><button onClick={handleLogout}>Log Out</button></li>
-            </ul>
-</nav>
-      </>
-}
-   </> 
-  )
+            <Link
+              className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              href="/dashboard/customers"
+            >
+              <FontAwesomeIcon icon={faUsers} color="rgb(59 130 246)" />
 
+              <span className="mx-2 text-sm font-medium">Customers</span>
+            </Link>
+            <Link
+              className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              href="/dashboard/deals"
+            >
+              <FontAwesomeIcon icon={faHandshake} color="rgb(59 130 246)" />
+
+              <span className="mx-2 text-sm font-medium">Deals</span>
+            </Link>
+            <Link
+              className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              href="/dashboard/upgrade"
+            >
+              <FontAwesomeIcon icon={faCoins} color="rgb(59 130 246)" />
+
+              <span className="mx-2 text-sm font-medium">Upgrade</span>
+            </Link>
+          </div>
+
+          <div className="space-y-3 flex flex-col dark:text-gray-200 items-start">
+            <div className="px-3">
+              <FontAwesomeIcon icon={faUserSecret} color="rgb(59 130 246)" />
+              <span className="text-sm mx-2 font-medium">{email}</span>
+            </div>
+            <div className="px-3">
+              <FontAwesomeIcon icon={faRightFromBracket} color="rgb(59 130 246)" />
+              <button className="text-sm mx-2 font-medium" onClick={handleLogout}>
+                Log Out
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </aside>
+  );
 }

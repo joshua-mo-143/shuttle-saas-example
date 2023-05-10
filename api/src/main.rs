@@ -6,7 +6,7 @@ use axum::Router;
 use axum_extra::extract::cookie::Key;
 use sqlx::PgPool;
 use std::path::PathBuf;
-use tower::{ServiceBuilder, ServiceExt};
+use tower::ServiceExt;
 use tower_http::services::ServeDir;
 
 mod auth;
@@ -41,6 +41,10 @@ async fn axum(
     #[shuttle_secrets::Secrets] secrets: shuttle_secrets::SecretStore,
     #[shuttle_static_folder::StaticFolder(folder = "public")] public: PathBuf,
 ) -> shuttle_axum::ShuttleAxum {
+    sqlx::migrate!()
+        .run(&postgres)
+        .await
+        .expect("Had some errors running migrations :(");
     let (stripe_key, mailgun_key, mailgun_url, domain) = grab_secrets(secrets);
 
     let state = AppState {
