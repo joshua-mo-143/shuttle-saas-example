@@ -11,6 +11,7 @@ use tower_http::services::ServeDir;
 
 mod auth;
 mod customers;
+mod dashboard;
 mod deals;
 mod mail;
 mod payments;

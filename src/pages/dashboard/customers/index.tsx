@@ -74,10 +74,10 @@ React.useEffect(() => {
       <Layout>
       <CustomerSingleModal data={data} id={id} vis={vis} setVis={setVis}/>
       <div className="py-10 flex flex-col items-center gap-4">
-        <h1 className="lg:text-3xl text-xl">View Customers</h1>
+        <h1 className="lg:text-3xl text-xl font-bold">View Customers</h1>
           <Link href="/dashboard/customers/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Customer</Link>
     {data ?
-      <div className="grid grid-cols-5 grid-rows-auto items-center gap-4">
+      <div className="mx-5 grid grid-cols-5 grid-rows-auto items-center gap-4">
       {data.map((cust) => (
         <div key={cust.id} className="px-10 py-4 bg-stone-200 flex flex-col gap-2">
           <p className="text-lg"> {cust.firstname} {cust.lastname} </p>

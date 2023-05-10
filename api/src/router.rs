@@ -4,24 +4,26 @@ use axum::{
     Router,
 };
 use http::header::{ACCEPT, AUTHORIZATION, ORIGIN};
+use http::HeaderValue;
 use http::Method;
-use tower_http::cors::{Any, CorsLayer};
+use tower_http::cors::CorsLayer;
 
 use crate::auth::{login, logout, register};
 use crate::customers::{
     create_customer, destroy_customer, edit_customer, get_all_customers, get_customer_names,
     get_one_customer,
 };
+use crate::dashboard::get_dashboard_data;
 use crate::deals::{create_deal, destroy_deal, edit_deal, get_all_deals, get_one_deal};
 use crate::mail::subscribe;
 use crate::payments::create_checkout;
 
 pub fn create_api_router(state: AppState) -> Router {
     let cors = CorsLayer::new()
-        // .allow_credentials(true)
+        .allow_credentials(true)
         .allow_methods(vec![Method::GET, Method::POST, Method::PUT, Method::DELETE])
         .allow_headers(vec![ORIGIN, AUTHORIZATION, ACCEPT])
-        .allow_origin(Any);
+        .allow_origin(state.domain.parse::<HeaderValue>().unwrap());
 
     let payments_router = Router::new().route("/pay", post(create_checkout));
 
@@ -54,6 +56,8 @@ pub fn create_api_router(state: AppState) -> Router {
         .nest("/deals", deals_router)
         .nest("/payments", payments_router)
         .nest("/auth", auth_router)
+        .route("/dashboard", post(get_dashboard_data))
+        // add middleware here
         .route("/subscribe", post(subscribe))
         .route("/health", get(hello_world))
         .with_state(state)

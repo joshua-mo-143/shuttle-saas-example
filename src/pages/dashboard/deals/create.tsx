@@ -18,7 +18,8 @@ export default function CreateDeal() {
 
 let router = useRouter();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
      const url = `//${window.location.host}/api/deals/create`
 
       try {
@@ -31,8 +32,8 @@ let router = useRouter();
             }),
             
             body: JSON.stringify({
-              estimate_worth: parseInt(estimate),
-              custId: custId,
+              estimatedworth: parseInt(estimate),
+              cust_id: parseInt(custId),
               useremail: email
 
           })
@@ -51,8 +52,6 @@ let router = useRouter();
         console.log(`Error: ${e}`);
       }
     };
-    
-  }
   
   React.useEffect(() => {
     const fetchData = async () => {
@@ -93,7 +92,7 @@ let router = useRouter();
   return (
     <>
       <Layout>
-            <form className="py-10 flex flex-col gap-4 justify-center items-center">
+            <form className="py-10 flex flex-col gap-4 justify-center items-center" onSubmit={(e) => handleSubmit(e)}>
         <h1 className="lg:text-2xl text-xl text-center">Create Deal</h1>
           <label htmlFor="estimated_worth">
             <span>Estimated worth: </span>
@@ -105,7 +104,8 @@ let router = useRouter();
       </label>
           <label htmlFor="custId">
             <span>Customer: </span>
-          <select value={custId} onChange={(e) => setCustId((e.target as HTMLOptionElement).value)} className="px-5 py-2 shadow-md rounde-dmd bg-stone px-5 py-2">
+          <select value={custId} onChange={(e) => setCustId((e.target as HTMLSelectElement).value)} className="px-5 py-2 shadow-md rounde-dmd bg-stone px-5 py-2">
+              <option value=""></option>
             {custnames ? custnames.map((cust) => (
               <option value={cust.id} key={cust.id}>{cust.customer_name}</option>
             )) : null}

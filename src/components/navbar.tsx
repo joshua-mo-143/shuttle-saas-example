@@ -24,33 +24,37 @@ export default function Navbar() {
   }
 
   return (
-  <nav className="absolute top-0 w-screen h-4 flex flex-row ">
-      <ul className="m-5 flex gap-5 flex flex-row">
+  <>
     { email == "" ?
-      <>
+  <nav className="absolute z-10 top-0 w-screen h-4 flex flex-row ">
+      <ul className="m-5 flex gap-5 flex flex-row">
+    
         <li><Link href="/">Home</Link></li>
         <li><Link href="/login">Log In</Link></li>
         <li><Link href="/register">Register</Link></li>
-      </> : 
+
+    </ul>
+  </nav>
+      : 
       <>
+          <nav className="w-[15%] text-stone-100 min-h-screen flex flex-row items-top bg-blue-950">
+      <ul className="m-5 flex gap-5 flex flex-col">
+            <li>
+              
+          <h1 className="py-10">Logo</h1>
+              </li>
+                  <li>{email}</li>
         <li><Link href="/dashboard">Dashboard</Link></li>
         <li><Link href="/dashboard/customers">Customers</Link></li>
         <li><Link href="/dashboard/deals">Deals</Link></li>
 
         <li><Link href="/dashboard/upgrade">Upgrade</Link></li>
-                  <li>
-            <div onMouseEnter={() => setLogoutVis(true)} className="" onMouseLeave={() => setLogoutVis(false)}>
-          
-              <div className="flex flex-row gap-2 items-center">
-                <span>{email}</span>
-                 {logoutVis ? <FontAwesomeIcon icon={faChevronUp} className="text-xs"/> : <FontAwesomeIcon icon={faChevronDown} className="text-xs"/>}
-                </div>
-              <button className={logoutVis ? "text-right w-4/5" : "w-full text-center invisible"}onClick={handleLogout}>Log Out</button>
-              </div>
-            </li>
-
-      </>}
-    </ul>
-  </nav>
+            <li><button onClick={handleLogout}>Log Out</button></li>
+            </ul>
+</nav>
+      </>
+}
+   </> 
   )
+
 }

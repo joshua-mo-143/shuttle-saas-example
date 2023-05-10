@@ -16,6 +16,7 @@ pub struct Customer {
     pub email: String,
     pub phone: String,
     pub priority: i16,
+    
 }
 
 #[derive(Deserialize, sqlx::FromRow, Serialize)]
@@ -37,6 +38,7 @@ pub struct ChangeRequest {
 }
 
 #[derive(Serialize, Deserialize)]
+#[allow(non_snake_case)]
 pub struct NewCustomer {
     pub firstName: String,
     pub lastName: String,

@@ -18,7 +18,10 @@ pub struct PaymentInfo {
     cvc: String,
 }
 
-pub async fn create_checkout(State(state): State<AppState>, Json(req): Json<PaymentInfo>) -> Result<StatusCode, StatusCode> {
+pub async fn create_checkout(
+    State(state): State<AppState>,
+    Json(req): Json<PaymentInfo>,
+) -> Result<StatusCode, StatusCode> {
     let ctx = stripe::Client::new(&state.stripe_key);
 
     let customer = Customer::create(
@@ -28,7 +31,9 @@ pub async fn create_checkout(State(state): State<AppState>, Json(req): Json<Paym
             email: Some(&req.email),
             ..Default::default()
         },
-    ).await.expect("Had an error creating customer!");
+    )
+    .await
+    .expect("Had an error creating customer!");
 
     println!("Made a customer");
 
@@ -43,15 +48,15 @@ pub async fn create_checkout(State(state): State<AppState>, Json(req): Json<Paym
                         exp_year: req.expyear,
                         exp_month: req.expmonth,
                         cvc: Some(req.cvc),
-                        ..Default::default()
                     },
                 )),
                 ..Default::default()
             },
         )
-        .await.expect("Had an error creating payment method!");
+        .await
+        .expect("Had an error creating payment method!");
 
-            println!("Made a payment method");
+        println!("Made a payment method");
 
         PaymentMethod::attach(
             &ctx,
@@ -63,7 +68,7 @@ pub async fn create_checkout(State(state): State<AppState>, Json(req): Json<Paym
         .await
         .expect("Had an error attaching the payment method!");
 
-                    println!("Attached a payment method");
+        println!("Attached a payment method");
 
         pm
     };

@@ -11,7 +11,7 @@ interface Deal {
   status: string,
   closed: string,
   customer_id: number,
-
+  customer_name: String
 }
 
 export default function DealIndex() {
@@ -34,6 +34,38 @@ export default function DealIndex() {
     setId(customerIdAsInt)
     setVis(true)
   }
+
+  const handleStatus = async (e: React.SyntheticEvent) => {
+  e.preventDefault()
+
+  let element = e.target as HTMLSelectElement;
+
+  let id = element.getAttribute("data-id");
+  let status = element.value;
+    
+    const url = `//${window.location.host}/api/deals/${id}`
+    
+    try {
+      const res = await fetch(url,
+      {
+        method: "PUT",
+        mode: "cors",
+        headers: new Headers({
+            "Content-Type": "application/json"
+          }),
+        body: JSON.stringify({
+            new_value: status,
+            email: email,
+          })
+      });
+
+      if (res.ok) {
+        element.value = status;
+      }
+    } catch(e: any) {
+      console.log(e.message)
+    }
+  }
   
 React.useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +82,7 @@ React.useEffect(() => {
             }),
             
             body: JSON.stringify({
+            status: "closed",
             email: email
           })
           },
@@ -74,18 +107,36 @@ React.useEffect(() => {
     return (
       <Layout>
       <div className="py-10 flex flex-col items-center gap-4">
-        <h1 className="lg:text-3xl text-xl">View Deals</h1>
+        <h1 className="lg:text-3xl text-xl font-bold">View Deals</h1>
           <Link href="/dashboard/deals/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Deal</Link>
     {data ?
-      <div className="grid grid-cols-5 grid-rows-auto items-center gap-4">
-      {data.map((cust) => (
-        <div key={cust.id} className="px-10 py-4 bg-stone-200 flex flex-col gap-2">
-          <p className="text-lg"> Hello world! </p>
-          <p> Email:  </p>
-          <p> Phone:  </p>
-        </div>)
+      <table className="table-auto border-spacing-x-2 text-center border-2 border-black">
+          <tr className="border-2 border-black">
+            <th className="border-2 border-black">Customer Name</th>
+            <th className="border-2 border-black">Estimated Worth</th>
+            <th className="border-2 border-black">Status</th>
+            <th className="border-2 border-black"></th>
+            <th className="border-2 border-black"></th>
+            <th className="border-2 border-black"></th>
+          </tr>
+      {data.map((deal) => (
+        <tr key={deal.id} className="border-2 border-black">
+          <td className="border-2 border-black">{deal.customer_name} </td>
+          <td className="border-2 border-black">£{deal.estimate_worth}.00</td>
+          <td className="border-2 border-black">
+                <select className="bg-white" data-id={deal.id} value={deal.status} onChange={(e: React.SyntheticEvent) => handleStatus(e)}>
+                  <option value="open">Open</option>
+                  <option value="awaitingresponse">Awaiting Response</option>
+                  <option value="ready">Ready to close</option>
+                  <option value="closed">Closed</option>
+                  </select>
+                </td>  
+          <td className="border-2 border-black px-5">View More</td>
+          <td className="border-2 border-black px-5">Edit</td>
+          <td className="border-2 border-black px-5">Delete</td>
+        </tr>)
       )}
-  </div>  
+  </table>  
     : null }
 
       </div>
