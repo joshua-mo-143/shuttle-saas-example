@@ -15,7 +15,7 @@ pub struct Deal {
     pub actual_worth: Option<i32>,
     pub status: String,
     pub closed: String,
-    pub customer_name: String,
+    pub customer_name: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, sqlx::FromRow)]
@@ -42,7 +42,6 @@ pub struct NewDeal {
 
 #[derive(Deserialize)]
 pub struct ChangeRequest {
-    // pub columnname: String,
     pub new_value: String,
     pub email: String,
 }
@@ -57,8 +56,7 @@ pub async fn get_all_deals(
         d.actual_worth, 
         d.status, 
         d.closed, 
-        (SELECT CONCAT(firstname, ' ', lastname) 
-        FROM customers WHERE id = d.owner_id) AS customer_name 
+        (select concat(c.firstname, ' ', c.lastname) from customers WHERE id = d.customer_id) as customer_name
         FROM deals d LEFT JOIN customers c ON d.customer_id = c.id WHERE c.owner_id = (SELECT id FROM users WHERE email = $1)")
 					.bind(req.email)
 					.fetch_all(&state.postgres)

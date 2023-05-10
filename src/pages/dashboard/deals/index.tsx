@@ -82,7 +82,6 @@ React.useEffect(() => {
             }),
             
             body: JSON.stringify({
-            status: "closed",
             email: email
           })
           },
@@ -110,33 +109,25 @@ React.useEffect(() => {
         <h1 className="lg:text-3xl text-xl font-bold">View Deals</h1>
           <Link href="/dashboard/deals/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Deal</Link>
     {data ?
-      <table className="table-auto border-spacing-x-2 text-center border-2 border-black">
-          <tr className="border-2 border-black">
-            <th className="border-2 border-black">Customer Name</th>
-            <th className="border-2 border-black">Estimated Worth</th>
-            <th className="border-2 border-black">Status</th>
-            <th className="border-2 border-black"></th>
-            <th className="border-2 border-black"></th>
-            <th className="border-2 border-black"></th>
-          </tr>
+        <>
       {data.map((deal) => (
-        <tr key={deal.id} className="border-2 border-black">
-          <td className="border-2 border-black">{deal.customer_name} </td>
-          <td className="border-2 border-black">£{deal.estimate_worth}.00</td>
-          <td className="border-2 border-black">
-                <select className="bg-white" data-id={deal.id} value={deal.status} onChange={(e: React.SyntheticEvent) => handleStatus(e)}>
+        <div key={deal.id} className="px-10 py-4 bg-slate-500 grid grid-cols-7 grid-rows-1 items-center gap-2 rounded-md">
+          <p className="text-lg col-span-2"> {deal.customer_name} </p>
+          <p className="col-span-2"> Sale amount: £{deal.estimate_worth}.00 </p>
+          <div className="col-span-2">
+                 <span> Status: </span>
+                 
+                <select className="text-center bg-slate-500 rounded-md" data-id={deal.id} value={deal.status} onChange={(e: React.SyntheticEvent) => handleStatus(e)}>
                   <option value="open">Open</option>
                   <option value="awaitingresponse">Awaiting Response</option>
                   <option value="ready">Ready to close</option>
                   <option value="closed">Closed</option>
                   </select>
-                </td>  
-          <td className="border-2 border-black px-5">View More</td>
-          <td className="border-2 border-black px-5">Edit</td>
-          <td className="border-2 border-black px-5">Delete</td>
-        </tr>)
+                 </div>
+        </div>
+        )
       )}
-  </table>  
+    </>
     : null }
 
       </div>

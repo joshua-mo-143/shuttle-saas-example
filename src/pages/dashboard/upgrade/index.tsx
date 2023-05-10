@@ -15,7 +15,7 @@ export default function Home() {
               <li>Lorem ipsum</li>
               <li>Lorem ipsum</li>
               <li>Lorem ipsum</li>
- shadow-md border              <li>Lorem ipsum</li>
+               <li>Lorem ipsum</li>
               <li>Lorem ipsum</li>
           </ul>
               <p className="text-xl">This is you!</p>

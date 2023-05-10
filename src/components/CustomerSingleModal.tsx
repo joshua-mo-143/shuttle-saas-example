@@ -56,13 +56,13 @@ const res = await fetch(url, {
     return (
     <>
     {vis ?
-        <div className="w-screen h-screen backdrop-blur z-50 absolute">
+        <div className="w-full h-screen backdrop-blur z-50 absolute">
       <div className="py-10 relative flex flex-col items-center gap-4">      
     {data ?
         data.filter(a => a.id == id).map((item) => (
           <div key={item.id} className="px-10 py-4 bg-stone-200 flex rounded-md flex-col gap-2 w-4/5 h-[40rem]">
 
-      <button onClick={() => setVis(false)} className="text-right"><FontAwesomeIcon icon={faMultiply} className="hover:text-red-500 transition-all"/></button>  
+      <button onClick={() => setVis(false)} className="text-right"><FontAwesomeIcon icon={faMultiply} className="text-2xl hover:text-red-500 transition-all"/></button>  
           <p className="text-xl"> {item.firstname} {item.lastname} </p>
           <p> Email: {item.email} </p>
           <p> Phone: {item.phone} </p>

@@ -73,18 +73,19 @@ React.useEffect(() => {
     return (
       <Layout>
       <CustomerSingleModal data={data} id={id} vis={vis} setVis={setVis}/>
-      <div className="py-10 flex flex-col items-center gap-4">
+      <div className="py-10 flex flex-col items-center gap-4 w-full">
         <h1 className="lg:text-3xl text-xl font-bold">View Customers</h1>
           <Link href="/dashboard/customers/create" className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">Create Customer</Link>
     {data ?
-      <div className="mx-5 grid grid-cols-5 grid-rows-auto items-center gap-4">
+      <div className="mx-5 grid grid-cols-1 grid-rows-auto items-center w-4/5 gap-4">
       {data.map((cust) => (
-        <div key={cust.id} className="px-10 py-4 bg-stone-200 flex flex-col gap-2">
-          <p className="text-lg"> {cust.firstname} {cust.lastname} </p>
-          <p> Email: {cust.email} </p>
-          <p> Phone: {cust.phone} </p>
-          <button data-id={cust.id} onClick={handleVis} className="px-5 py-2 bg-stone-100 hover:bg-stone-200 transition-all mt-4">View More</button>
-        </div>)
+        <div key={cust.id} className="px-10 py-4 bg-slate-500 grid grid-cols-7 grid-rows-1 items-center gap-2 rounded-md">
+          <p className="text-lg col-span-2"> {cust.firstname} {cust.lastname} </p>
+          <p className="col-span-2"> Email: {cust.email} </p>
+          <p className="col-span-2"> Phone: {cust.phone} </p>
+          <button data-id={cust.id} onClick={handleVis} className="px-5 py-2 bg-slate-300 hover:bg-stone-200 transition-all mt-4 rounded-md">View More</button>
+        </div>
+          )
       )}
   </div>  
     : null }

@@ -11,7 +11,6 @@ type Custname = {
 export default function CreateDeal() {
 
   const [estimate, setEstimate] = React.useState<string>("");
-  const [actual, setActual] = React.useState<string>("");
   const [custId, setCustId] = React.useState<string>("");
   const [custnames, setCustnames] = React.useState<Custname[]>([]);
   const {email} = accountStore()
@@ -43,11 +42,9 @@ let router = useRouter();
         if (res.status == 403) {
           return router.push("/login");
         }
+
+      router.push("/dashboard/deals")
       
-        const data = await res.json()
-
-        setCustnames(data);
-
       } catch (e: any) {
         console.log(`Error: ${e}`);
       }
@@ -95,12 +92,8 @@ let router = useRouter();
             <form className="py-10 flex flex-col gap-4 justify-center items-center" onSubmit={(e) => handleSubmit(e)}>
         <h1 className="lg:text-2xl text-xl text-center">Create Deal</h1>
           <label htmlFor="estimated_worth">
-            <span>Estimated worth: </span>
+            <span>Total to be invoiced: </span>
             <input type="text" name="estimated_worth" className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={estimate} onInput={(e) => setEstimate((e.target as HTMLInputElement).value)}></input>
-      </label>
-          <label htmlFor="actual_worth">
-            <span>Actual worth: </span>
-            <input type="text" name="actual_worth" className="px-5 py-2 shadow-md rounded-md bg-stone-100 px-5 py-2" value={actual} onInput={(e) => setActual((e.target as HTMLInputElement).value)}></input>
       </label>
           <label htmlFor="custId">
             <span>Customer: </span>
