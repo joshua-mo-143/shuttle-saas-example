@@ -3,7 +3,6 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { accountStore } from '../../../zustandStore';
 import Link from 'next/link';
-import CustomerSingleModal from '@/components/CustomerSingleModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -17,23 +16,9 @@ interface Customer {
 
 export default function CustomerIndex() {
   const [data, setData] = React.useState<Customer[]>([]);
-  const [id, setId] = React.useState<number>(1);
-  const [vis, setVis] = React.useState<boolean>(false);
   const { email } = accountStore();
 
   let router = useRouter();
-
-  const handleVis = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-
-    const element = e.target as HTMLButtonElement;
-    const customerId = element.getAttribute('data-id');
-
-    // @ts-ignore
-    const customerIdAsInt = parseInt(customerId);
-    setId(customerIdAsInt);
-    setVis(true);
-  };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -66,9 +51,8 @@ export default function CustomerIndex() {
     fetchData();
   }, [email, router]);
 
-  const handleDelete = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    const url = `//${window.location.host}/api/customers/${id}`;
+  const handleDelete = async (customerId: number) => {
+    const url = `//${window.location.host}/api/customers/${customerId}`;
 
     try {
       const res = await fetch(url, {
@@ -92,7 +76,6 @@ export default function CustomerIndex() {
 
   return (
     <Layout>
-      <CustomerSingleModal data={data} id={id} vis={vis} setVis={setVis} />
       <div className="py-10 flex flex-col gap-4 w-full px-24 items-start">
         <div>
           <h2 className="text-2xl font-semibold leading-tight my-10">Customers</h2>
@@ -136,7 +119,7 @@ export default function CustomerIndex() {
                   <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
                     <button
                       data-id={cust.id}
-                      onClick={handleDelete}
+                      onClick={() => handleDelete(cust.id)}
                       className="px-5 py-2 hover:bg-red-700 transition-all mt-4 rounded-md text-white bg-red-500"
                     >
                       <FontAwesomeIcon icon={faTrash} color="white" /> Delete Customer
