@@ -237,7 +237,7 @@ export default function CreateCustomer() {
                   ease-in
                 "
               >
-                <span className="mr-2 uppercase">Sign In &rarr;</span>
+                <span className="mr-2 uppercase">Submit &rarr;</span>
               </button>
             </div>
           </fieldset>

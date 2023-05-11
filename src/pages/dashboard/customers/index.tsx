@@ -119,7 +119,7 @@ export default function CustomerIndex() {
                   <button
                     data-id={cust.id}
                     onClick={() => handleDelete(cust.id)}
-                    className="px-5 py-2 hover:bg-red-700 transition-all mt-4 rounded text-white bg-[#EF924C]"
+                    className="px-5 py-2 hover:bg-red-700 transition-all mt-4 rounded text-white bg-red-500"
                   >
                     <FontAwesomeIcon icon={faTrash} color="white" /> Delete Customer
                   </button>
