@@ -116,15 +116,13 @@ export default function CustomerIndex() {
                   <p className="text-gray-900 whitespace-no-wrap">{cust.phone}</p>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
-                    <button
-                      data-id={cust.id}
-                      onClick={() => handleDelete(cust.id)}
-                      className="px-5 py-2 hover:bg-red-700 transition-all mt-4 rounded-md text-white bg-red-500"
-                    >
-                      <FontAwesomeIcon icon={faTrash} color="white" /> Delete Customer
-                    </button>
-                  </span>
+                  <button
+                    data-id={cust.id}
+                    onClick={() => handleDelete(cust.id)}
+                    className="px-5 py-2 hover:bg-red-700 transition-all mt-4 rounded text-white bg-red-500"
+                  >
+                    <FontAwesomeIcon icon={faTrash} color="white" /> Delete Customer
+                  </button>
                 </td>
               </tr>
             ))}
@@ -132,7 +130,7 @@ export default function CustomerIndex() {
         </table>
         <Link
           href="/dashboard/customers/create"
-          className="transition-all mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="transition-all mt-4 bg-black hover:bg-slate-950 text-white font-bold py-2 px-4 rounded"
         >
           <FontAwesomeIcon icon={faPlus} color="white" /> Add Customer
         </Link>

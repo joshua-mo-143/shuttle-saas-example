@@ -39,7 +39,7 @@ export default function Navbar() {
   return (
     <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
       <Link href="/">
-        <FontAwesomeIcon icon={faRocket} size="3x" color="rgb(59 130 246)" />
+        <FontAwesomeIcon icon={faRocket} size="3x" color="black" />
       </Link>
       <div className="flex flex-col justify-between flex-1 mt-6">
         <nav className="-mx-3 space-y-6 flex flex-col justify-between h-full">
@@ -48,7 +48,7 @@ export default function Navbar() {
               className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
               href="/dashboard"
             >
-              <FontAwesomeIcon icon={faGauge} color="rgb(59 130 246)" />
+              <FontAwesomeIcon icon={faGauge} color="black" fixedWidth />
 
               <span className="mx-2 text-sm font-medium">Dashboard</span>
             </Link>
@@ -57,7 +57,7 @@ export default function Navbar() {
               className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
               href="/dashboard/customers"
             >
-              <FontAwesomeIcon icon={faUsers} color="rgb(59 130 246)" />
+              <FontAwesomeIcon icon={faUsers} color="black" fixedWidth />
 
               <span className="mx-2 text-sm font-medium">Customers</span>
             </Link>
@@ -65,7 +65,7 @@ export default function Navbar() {
               className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
               href="/dashboard/deals"
             >
-              <FontAwesomeIcon icon={faHandshake} color="rgb(59 130 246)" />
+              <FontAwesomeIcon icon={faHandshake} color="black" fixedWidth />
 
               <span className="mx-2 text-sm font-medium">Deals</span>
             </Link>
@@ -73,7 +73,7 @@ export default function Navbar() {
               className="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
               href="/dashboard/upgrade"
             >
-              <FontAwesomeIcon icon={faCoins} color="rgb(59 130 246)" />
+              <FontAwesomeIcon icon={faCoins} color="black" fixedWidth />
 
               <span className="mx-2 text-sm font-medium">Upgrade</span>
             </Link>
@@ -81,11 +81,11 @@ export default function Navbar() {
 
           <div className="space-y-3 flex flex-col dark:text-gray-200 items-start">
             <div className="px-3">
-              <FontAwesomeIcon icon={faUserSecret} color="rgb(59 130 246)" />
+              <FontAwesomeIcon icon={faUserSecret} color="black" fixedWidth />
               <span className="text-sm mx-2 font-medium">{email}</span>
             </div>
             <div className="px-3">
-              <FontAwesomeIcon icon={faRightFromBracket} color="rgb(59 130 246)" />
+              <FontAwesomeIcon icon={faRightFromBracket} color="black" fixedWidth />
               <button className="text-sm mx-2 font-medium" onClick={handleLogout}>
                 Log Out
               </button>

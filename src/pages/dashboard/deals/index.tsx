@@ -139,7 +139,7 @@ export default function DealIndex() {
         </table>
         <Link
           href="/dashboard/deals/create"
-          className="transition-all mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="transition-all mt-4 bg-black hover:bg-slate-950 text-white font-bold py-2 px-4 rounded"
         >
           <FontAwesomeIcon icon={faPlus} color="white" /> Create Deal
         </Link>

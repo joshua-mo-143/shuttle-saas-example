@@ -29,22 +29,31 @@ export default function Home() {
     <>
       <Layout>
         <section className="min-h-full py-40 w-full flex flex-col justify-center items-center gap-10">
-          <h1 className="text-3xl font-bold">Next.js + Rust SaaS Template</h1>
+          <h1 className="text-5xl font-bold">
+            Welcome to <span className="text-[#EF924C]">Next.js + Rust SaaS Template</span>
+          </h1>
 
-          <div className="lg:w-1/2 grid grid-cols-2 justify-center items-center gap-10 ">
+          <div className="lg:w-1/2 grid grid-cols-2 justify-center gap-6">
             {cards.map((card) => (
               <div
                 key={card.title}
-                className="shadow-md px-10 py-5 rounded-lg bg-slate-50 text-center border h-full flex flex-col justify-between"
+                className="px-10 py-5 rounded-lg border h-full flex flex-col justify-between space-y-2"
               >
-                <h2 className="font-bold text-center text-xl">{card.title}</h2>
+                <h2 className="font-bold text-xl">{card.title} &rarr;</h2>
                 <p>{card.description}</p>
-                <a href={card.href} target="_blank" className="text-blue-300 visited:text-blue-600 transition-all">
+                <a href={card.href} target="_blank" className="text-[#EF924C] transition-all hover:underline">
                   Learn more here
                 </a>
               </div>
             ))}
           </div>
+
+          <p className="text-xs">
+            Powered by{' '}
+            <a className="font-semibold" href="https://shuttle.rs" target="_blank">
+              🚀 Shuttle
+            </a>
+          </p>
         </section>
       </Layout>
     </>

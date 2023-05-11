@@ -64,11 +64,11 @@ export default function Home() {
           md:px-8
           lg:px-10
           py-8
-          rounded-3xl
+          rounded-md
           w-50
           max-w-md"
           >
-            <h1 className="lg:text-2xl text-xl text-center">Welcome Back</h1>
+            <h1 className="lg:text-2xl text-xl text-center font-bold">Welcome Back</h1>
             <fieldset className="mt-10">
               <label htmlFor="email" className="text-xs tracking-wide text-gray-600">
                 E-Mail Address:
@@ -83,7 +83,7 @@ export default function Home() {
                     top-[30%]
                     h-full"
                   icon={faAt}
-                  color="rgb(59 130 246)"
+                  color="black"
                 />
                 <input
                   type="email"
@@ -92,11 +92,11 @@ export default function Home() {
                     placeholder-gray-500
                     pl-10
                     pr-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400"
+                    focus:outline-none focus:border-black"
                   value={loginEmail}
                   onInput={(e) => setLoginEmail((e.target as HTMLInputElement).value)}
                   placeholder="Enter your email"
@@ -116,7 +116,7 @@ export default function Home() {
                     top-[30%]
                     h-full"
                   icon={faLock}
-                  color="rgb(59 130 246)"
+                  color="black"
                 />
 
                 <input
@@ -126,11 +126,11 @@ export default function Home() {
                     placeholder-gray-500
                     pl-10
                     pr-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400"
+                    focus:outline-none focus:border-black"
                   value={pw}
                   onInput={(e) => setPw((e.target as HTMLInputElement).value)}
                   placeholder="Enter your password"
@@ -145,7 +145,7 @@ export default function Home() {
                     h-full"
                   icon={pwVis ? faEyeSlash : faEye}
                   onClick={togglePassword}
-                  color="rgb(59 130 246)"
+                  color="black"
                 />
               </div>
 
@@ -160,9 +160,9 @@ export default function Home() {
                   focus:outline-none
                   text-white text-sm
                   sm:text-base
-                  bg-blue-500
-                  hover:bg-blue-600
-                  rounded-2xl
+                  bg-black
+                  hover:bg-slate-950
+                  rounded-md
                   py-2
                   w-full
                   transition
@@ -170,20 +170,7 @@ export default function Home() {
                   ease-in
                 "
                 >
-                  <span className="mr-2 uppercase">Sign In</span>
-                  <span>
-                    <svg
-                      className="h-6 w-6"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </span>
+                  <span className="mr-2 uppercase">Sign In &rarr;</span>
                 </button>
               </div>
             </fieldset>
@@ -197,7 +184,7 @@ export default function Home() {
             text-xs text-center"
             >
               Don&apos;t have an account?
-              <Link href="/register" className="text-xs ml-2 text-blue-500 font-semibold">
+              <Link href="/register" className="text-xs ml-2 text-black font-semibold">
                 Register now
               </Link>
             </span>

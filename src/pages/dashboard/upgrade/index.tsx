@@ -11,9 +11,9 @@ export default function Home() {
           <div className="dark:bg-gray-800">
             <div className="container px-6 py-8 mx-auto">
               <div className="flex flex-col items-center justify-center space-y-8 lg:-mx-4 lg:flex-row lg:items-stretch lg:space-y-0">
-                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border-2 border-gray-200 rounded-lg lg:mx-4 dark:bg-gray-800 dark:border-gray-700 shadow-md">
+                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border border-gray-200 rounded-md lg:mx-4 dark:bg-gray-800 dark:border-gray-700">
                   <div className="flex-shrink-0">
-                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-blue-400 uppercase rounded-lg bg-gray-50 dark:bg-gray-700">
+                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded bg-gray-50 dark:bg-gray-700">
                       Casual
                     </h2>
                   </div>
@@ -26,13 +26,13 @@ export default function Home() {
                     <li className="text-gray-500 dark:text-gray-400">2Gb of storage</li>
                   </ul>
 
-                  <span>This is you</span>
+                  <span className="h-10 flex justify-center items-center">Your plan</span>
                 </div>
 
-                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border-2 border-gray-200 rounded-lg lg:mx-4 dark:bg-gray-800 dark:border-gray-700 shadow-md">
+                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border-2 border-gray-200 rounded-md lg:mx-4 dark:bg-gray-800 dark:border-gray-700 ">
                   <div className="flex-shrink-0">
-                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-blue-400 uppercase rounded-lg bg-gray-50 dark:bg-gray-700">
-                      Profesional
+                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded bg-gray-50 dark:bg-gray-700">
+                      Professional
                     </h2>
                   </div>
                   <div className="flex-shrink-0">
@@ -47,15 +47,15 @@ export default function Home() {
                   </ul>
 
                   <Link href="/dashboard/upgrade/checkout">
-                    <a className="inline-flex items-center justify-center px-4 py-2 font-semibold text-white uppercase transition-colors bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none">
+                    <a className="inline-flex items-center justify-center px-4 py-2 font-semibold text-white uppercase transition-colors bg-black rounded hover:bg-slate-950 focus:outline-none">
                       Upgrade
                     </a>
                   </Link>
                 </div>
 
-                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border-2 border-gray-200 rounded-lg lg:mx-4 dark:bg-gray-800 dark:border-gray-700 shadow-md">
+                <div className="flex flex-col w-full max-w-sm p-8 space-y-8 text-center bg-white border-2 border-gray-200 rounded-md lg:mx-4 dark:bg-gray-800 dark:border-gray-700 ">
                   <div className="flex-shrink-0">
-                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-blue-400 uppercase rounded-lg bg-gray-50 dark:bg-gray-700">
+                    <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded bg-gray-50 dark:bg-gray-700">
                       Expert
                     </h2>
                   </div>
@@ -72,7 +72,7 @@ export default function Home() {
                   </ul>
 
                   <Link href="/dashboard/upgrade/checkout">
-                    <a className="inline-flex items-center justify-center px-4 py-2 font-semibold text-white uppercase transition-colors bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none">
+                    <a className="inline-flex items-center justify-center px-4 py-2 font-semibold text-white uppercase transition-colors bg-black rounded hover:bg-slate-950 focus:outline-none">
                       Upgrade
                     </a>
                   </Link>

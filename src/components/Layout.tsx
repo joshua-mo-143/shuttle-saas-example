@@ -21,9 +21,7 @@ export default function Layout({ children }: Props) {
         }
       >
         <Navbar />
-        <div
-          className={email ? 'relative w-[85%] min-h-screen bg-slate-50' : 'relative w-screen min-h-screen bg-slate-50'}
-        >
+        <div className={`relative bg-slate-50 h-screen overflow-y-scroll ${email ? 'w-full' : 'w-screen'}`}>
           {children}
         </div>
       </div>
