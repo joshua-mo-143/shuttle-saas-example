@@ -2,8 +2,8 @@ import { faker } from '@faker-js/faker';
 
 export default function RecentSales() {
   return (
-    <div className="rounded-md shadow-md p-6 flex flex-col gap-4 w-full items-start">
-      <h2 className="text-2xl font-semibold leading-tight my-2">Recent Sales</h2>
+    <div className="rounded-md shadow-md p-6 flex flex-col gap-4 w-full items-start bg-white">
+      <h2 className="text-2xl font-bold leading-tight my-2">Recent Sales</h2>
 
       <table className="w-full">
         <thead>

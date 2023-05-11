@@ -64,7 +64,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-8 pt-10 justify-center items-center pb-10 overflow-y-scroll">
+      <div className="flex flex-col gap-8 pt-10 justify-center bg-slate-50 items-center pb-10 overflow-y-scroll">
         <div className="w-full px-24 py-10">
           <SalesChart />
 

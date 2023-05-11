@@ -41,15 +41,16 @@ function SalesChart() {
       {
         label: 'Sales - Last 7 Months',
         data: [100, 300, 200, 100, 200, 400, 300],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        borderColor: '#EF924C',
+        backgroundColor: '#EF924C',
+        color: '#EF924C',
         tension: 0.3,
       },
     ],
   };
 
   return (
-    <div className="w-full h-96 shadow-md p-6 mb-10 rounded-md">
+    <div className="w-full h-96 shadow-md p-6 mb-10 rounded-md bg-white">
       <Line options={options} data={chartdata} />
     </div>
   );

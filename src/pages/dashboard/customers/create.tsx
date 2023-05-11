@@ -58,7 +58,7 @@ export default function CreateCustomer() {
           md:px-8
           lg:px-10
           py-8
-          rounded-3xl
+          rounded-md
           w-50
           max-w-md"
           >
@@ -72,11 +72,11 @@ export default function CreateCustomer() {
                   className="text-sm mb-4
                     placeholder-gray-500
                     px-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400"
+                    focus:outline-none focus:border-black"
                   value={firstName}
                   onInput={(e) => setFirstName((e.target as HTMLInputElement).value)}
                   placeholder="Enter first name"
@@ -91,11 +91,11 @@ export default function CreateCustomer() {
                   className="text-sm mb-4
                     placeholder-gray-500
                     px-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400"
+                    focus:outline-none focus:border-black"
                   value={lastName}
                   onInput={(e) => setLastName((e.target as HTMLInputElement).value)}
                   placeholder="Enter last name"
@@ -109,11 +109,11 @@ export default function CreateCustomer() {
                   className="text-sm mb-4
                     placeholder-gray-500
                     px-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400"
+                    focus:outline-none focus:border-black"
                   value={custEmail}
                   onInput={(e) => setCustEmail((e.target as HTMLInputElement).value)}
                   placeholder="Enter email address"
@@ -127,11 +127,11 @@ export default function CreateCustomer() {
                   className="text-sm mb-4
                     placeholder-gray-500
                     px-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400"
+                    focus:outline-none focus:border-black"
                   value={phone}
                   onInput={(e) => setPhone((e.target as HTMLInputElement).value)}
                   placeholder="Enter mobile number"
@@ -144,11 +144,11 @@ export default function CreateCustomer() {
                   className="text-sm mb-4
                     placeholder-gray-500
                     px-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400 bg-white"
+                    focus:outline-none focus:border-black bg-white"
                   value={priority}
                   onChange={(e) => setPriority((e.target as HTMLSelectElement).value)}
                 >
@@ -170,9 +170,9 @@ export default function CreateCustomer() {
                   focus:outline-none
                   text-white text-sm
                   sm:text-base
-                  bg-blue-500
-                  hover:bg-blue-600
-                  rounded-2xl
+                  bg-black
+                  hover:bg-slate-950
+                  rounded-md
                   py-2
                   w-full
                   transition

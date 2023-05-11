@@ -90,7 +90,7 @@ export default function CreateDeal() {
           md:px-8
           lg:px-10
           py-8
-          rounded-3xl
+          rounded-md
           w-50
           max-w-md"
           >
@@ -104,11 +104,11 @@ export default function CreateDeal() {
                   className="text-sm mb-4
                     placeholder-gray-500
                     px-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400"
+                    focus:outline-none focus:border-black"
                   value={estimate}
                   onInput={(e) => setEstimate((e.target as HTMLInputElement).value)}
                   placeholder="Enter amount"
@@ -122,11 +122,11 @@ export default function CreateDeal() {
                   className="text-sm mb-4
                     placeholder-gray-500
                     px-4
-                    rounded-2xl
+                    rounded-md
                     border border-gray-400
                     w-full
                     py-2
-                    focus:outline-none focus:border-blue-400 bg-white"
+                    focus:outline-none focus:border-black bg-white"
                 >
                   <option value=""></option>
                   {custnames
@@ -147,9 +147,9 @@ export default function CreateDeal() {
                   focus:outline-none
                   text-white text-sm
                   sm:text-base
-                  bg-blue-500
-                  hover:bg-blue-600
-                  rounded-2xl
+                  bg-black
+                  hover:bg-slate-950
+                  rounded-md
                   py-2
                   w-full
                   transition

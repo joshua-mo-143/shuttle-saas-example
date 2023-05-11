@@ -77,7 +77,7 @@ export default function CustomerSingle({ data, id, vis, setVis }: Props) {
           <p> Email: {customer.email} </p>
           <p> Phone: {customer.phone} </p>
         </div>
-        <button onClick={(e) => handleDelete(e)} className="bg-red-800 px-5 py-2 text-white">
+        <button onClick={(e) => handleDelete(e)} className="bg-[#EF924C] px-5 py-2 text-white">
           Delete Customer
         </button>
       </div>

@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 export default function TopClients() {
   return (
-    <div className="rounded-md shadow-md p-6 flex flex-col gap-4 w-full items-start">
-      <h2 className="text-2xl font-semibold leading-tight my-2">Top Clients</h2>
+    <div className="rounded-md shadow-md p-6 flex flex-col gap-4 w-full items-start bg-white">
+      <h2 className="text-2xl font-bold leading-tight my-2">Top Clients</h2>
       <div className="justify-center items-center w-full">
         {new Array(7).fill(0).map((_, i) => (
           <div key={i} className="px-2 py-4 w-full flex justify-between items-center">
