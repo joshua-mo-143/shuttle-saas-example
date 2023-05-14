@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "rm -rf ./api/public && next build",
-    "full": "cargo shuttle run --working-directory api --port 8001",
-    "start": "next start",
+    "dev": "npm run build && concurrently --names 'next, shuttle' --kill-others 'next dev' 'cargo shuttle run --working-directory ./backend/'",
+    "build": "next build && cargo build --manifest-path ./backend/Cargo.toml",
+    "shuttle-login": "cargo shuttle login --working-directory ./backend/",
+    "full": "cargo shuttle run --working-directory backend --port 8001",
+    "start": "cargo shuttle project start --working-directory ./backend/",
+    "stop": "cargo shuttle project stop --working-directory ./backend/",
+    "deploy": "npm run build && cargo shuttle deploy --working-directory ./backend/ --allow-dirty",
     "lint": "next lint"
   },
   "dependencies": {
@@ -18,20 +21,17 @@
     "@types/react-dom": "18.0.11",
     "autoprefixer": "10.4.14",
     "chart.js": "^4.3.0",
+    "concurrently": "^8.0.1",
     "next": "13.3.0",
-    "plotly.js": "^2.22.0",
     "postcss": "8.4.21",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
-    "react-plotly.js": "^2.6.0",
     "tailwindcss": "3.3.1",
     "typescript": "5.0.4",
     "zustand": "^4.3.7"
   },
   "devDependencies": {
-    "@types/plotly.js": "^2.12.18",
-    "@types/react-plotly.js": "^2.6.0",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0"
   }

@@ -45,6 +45,7 @@ async fn axum(
         .run(&postgres)
         .await
         .expect("Had some errors running migrations :(");
+
     let (stripe_key, mailgun_key, mailgun_url, domain) = grab_secrets(secrets);
 
     let state = AppState {
@@ -76,19 +77,21 @@ async fn axum(
 fn grab_secrets(secrets: shuttle_secrets::SecretStore) -> (String, String, String, String) {
     let stripe_key = secrets
         .get("STRIPE_KEY")
-        .expect("Couldn't get STRIPE_KEY, did you remember to set it in Secrets.toml?");
+        .unwrap_or_else(|| "None".to_string());
 
     let mailgun_key = secrets
         .get("MAILGUN_KEY")
-        .expect("Couldn't get MAILGUN_KEY, did you remember to set it in Secrets.toml?");
+            .unwrap_or_else(|| "None".to_string());
 
     let mailgun_url = secrets
         .get("MAILGUN_URL")
-        .expect("Couldn't get MAILGUN_URL, did you remember to set it in Secrets.toml?");
+            .unwrap_or_else(|| "None".to_string());
+
 
     let domain = secrets
         .get("DOMAIN_URL")
-        .expect("Couldn't get DOMAIN_URL, did you remember to set it in Secrets.toml?");
+                .unwrap_or_else(|| "None".to_string());
+
 
     (stripe_key, mailgun_key, mailgun_url, domain)
 }
