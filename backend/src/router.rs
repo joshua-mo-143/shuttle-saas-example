@@ -1,5 +1,7 @@
 use crate::AppState;
 use axum::{
+    http::{self},
+    middleware::{self},
     routing::{get, post},
     Router,
 };
@@ -8,7 +10,7 @@ use http::HeaderValue;
 use http::Method;
 use tower_http::cors::CorsLayer;
 
-use crate::auth::{login, logout, register};
+use crate::auth::{login, logout, register, validate_session};
 use crate::customers::{
     create_customer, destroy_customer, edit_customer, get_all_customers, get_customer_names,
     get_one_customer,
@@ -55,9 +57,12 @@ pub fn create_api_router(state: AppState) -> Router {
         .nest("/customers", customers_router)
         .nest("/deals", deals_router)
         .nest("/payments", payments_router)
-        .nest("/auth", auth_router)
         .route("/dashboard", post(get_dashboard_data))
-        // add middleware here
+        .layer(middleware::from_fn_with_state(
+            state.clone(),
+            validate_session,
+        ))
+        .nest("/auth", auth_router)
         .route("/subscribe", post(subscribe))
         .route("/health", get(hello_world))
         .with_state(state)

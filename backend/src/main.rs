@@ -81,17 +81,15 @@ fn grab_secrets(secrets: shuttle_secrets::SecretStore) -> (String, String, Strin
 
     let mailgun_key = secrets
         .get("MAILGUN_KEY")
-            .unwrap_or_else(|| "None".to_string());
+        .unwrap_or_else(|| "None".to_string());
 
     let mailgun_url = secrets
         .get("MAILGUN_URL")
-            .unwrap_or_else(|| "None".to_string());
-
+        .unwrap_or_else(|| "None".to_string());
 
     let domain = secrets
         .get("DOMAIN_URL")
-                .unwrap_or_else(|| "None".to_string());
-
+        .unwrap_or_else(|| "None".to_string());
 
     (stripe_key, mailgun_key, mailgun_url, domain)
 }

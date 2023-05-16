@@ -1,4 +1,10 @@
-use axum::{extract::State, http::StatusCode, response::IntoResponse, Json};
+use axum::middleware::Next;
+use axum::{
+    extract::State,
+    http::{Request, StatusCode},
+    response::{IntoResponse, Response},
+    Json,
+};
 use axum_extra::extract::cookie::{Cookie, PrivateCookieJar, SameSite};
 use serde::Deserialize;
 use sqlx::Row;
@@ -97,28 +103,29 @@ pub async fn logout(
     }
 }
 
-// pub async fn validate_session<B>(
-//     jar: PrivateCookieJar,
-//     State(state): State<AppState>,
-//     request: Request<B>,
-//     next: Next<B>,
-// ) -> (PrivateCookieJar, Response) {
-//     let Some(cookie) = jar.get("foo").map(|cookie| cookie.value().to_owned()) else {
+pub async fn validate_session<B>(
+    jar: PrivateCookieJar,
+    State(state): State<AppState>,
+    request: Request<B>,
+    next: Next<B>,
+) -> (PrivateCookieJar, Response) {
+    let Some(cookie) = jar.get("foo").map(|cookie| cookie.value().to_owned()) else {
 
-//         println!("Couldn't find a cookie in the jar");
-//         return (jar,(StatusCode::FORBIDDEN, "Forbidden!".to_string()).into_response())
-//     };
+        println!("Couldn't find a cookie in the jar");
+        return (jar,(StatusCode::FORBIDDEN, "Forbidden!".to_string()).into_response())
+    };
 
-//     let find_session = sqlx::query("SELECT * FROM sessions WHERE session_id = $1")
-//         .bind(cookie)
-//         .execute(&state.postgres)
-//         .await;
+    let find_session =
+        sqlx::query("SELECT * FROM sessions WHERE session_id = $1 AND expires > CURRENT_TIMESTAMP")
+            .bind(cookie)
+            .execute(&state.postgres)
+            .await;
 
-//     match find_session {
-//         Ok(_) => (jar, next.run(request).await),
-//         Err(_) => (
-//             jar,
-//             (StatusCode::FORBIDDEN, "Forbidden!".to_string()).into_response(),
-//         ),
-//     }
-// }
+    match find_session {
+        Ok(_) => (jar, next.run(request).await),
+        Err(_) => (
+            jar,
+            (StatusCode::FORBIDDEN, "Forbidden!".to_string()).into_response(),
+        ),
+    }
+}

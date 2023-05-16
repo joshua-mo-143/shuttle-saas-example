@@ -56,9 +56,9 @@ pub async fn get_all_deals(
         d.closed, 
         (select concat(c.firstname, ' ', c.lastname) from customers WHERE id = d.customer_id) as customer_name
         FROM deals d LEFT JOIN customers c ON d.customer_id = c.id WHERE c.owner_id = (SELECT id FROM users WHERE email = $1)")
-					.bind(req.email) 
-					.fetch_all(&state.postgres)
-					.await {
+				.bind(req.email)
+				.fetch_all(&state.postgres)
+				.await {
         Ok(res) => Ok(Json(res)),
         Err(err) => Err((StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))
 
@@ -79,7 +79,7 @@ pub async fn get_one_deal(
         (select concat(c.firstname, ' ', c.lastname) from customers WHERE id = d.customer_id) as customer_name
         FROM deals d LEFT JOIN customers c ON d.customer_id = c.id WHERE c.owner_id = (SELECT id FROM users WHERE email = $1) AND d.id = $2"
     )
-					.bind(req.email)
+       			.bind(req.email)
 					.bind(id)
 					.fetch_one(&state.postgres)
 					.await  {

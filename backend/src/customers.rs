@@ -16,7 +16,6 @@ pub struct Customer {
     pub email: String,
     pub phone: String,
     pub priority: i16,
-    
 }
 
 #[derive(Deserialize, sqlx::FromRow, Serialize)]
