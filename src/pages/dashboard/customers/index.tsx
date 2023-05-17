@@ -76,7 +76,7 @@ export default function CustomerIndex() {
 
   return (
     <Layout>
-      <div className="py-10 flex flex-col gap-4 w-full px-24 items-start">
+      <div className="py-10 flex flex-col gap-4 w-full px-5 md:px-24 items-start">
         <div>
           <h2 className="text-2xl font-semibold leading-tight my-10">Customers</h2>
         </div>

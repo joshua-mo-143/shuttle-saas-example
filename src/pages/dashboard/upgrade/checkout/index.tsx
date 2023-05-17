@@ -44,7 +44,7 @@ export default function CreateCustomer() {
 
   return (
     <Layout>
-      <form className="min-h-screen flex flex-col items-center justify-center bg-gray-100" onSubmit={handleSubmit}>
+      <form className="px-5 min-h-screen flex flex-col items-center justify-center bg-gray-100" onSubmit={handleSubmit}>
         <div
           className="
           flex flex-col

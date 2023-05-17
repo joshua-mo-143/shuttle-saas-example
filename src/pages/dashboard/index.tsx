@@ -65,10 +65,10 @@ export default function Dashboard() {
   return (
     <Layout>
       <div className="flex flex-col gap-8 pt-10 justify-center bg-slate-50 items-center pb-10 overflow-y-scroll">
-        <div className="w-full px-24 py-10">
+        <div className="w-full px-5 sm:px-24 py-10">
           <SalesChart />
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <RecentSales />
             <TopClients />
           </div>

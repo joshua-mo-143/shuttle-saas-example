@@ -29,11 +29,11 @@ export default function Home() {
     <>
       <Layout>
         <section className="min-h-full py-40 w-full flex flex-col justify-center items-center gap-10">
-          <h1 className="text-5xl font-bold">
+          <h1 className="text-5xl font-bold text-center px-5">
             Welcome to <span className="text-[#EF924C]">Next.js + Rust SaaS Template</span>
           </h1>
 
-          <div className="lg:w-1/2 grid grid-cols-2 justify-center gap-6">
+          <div className="px-5 lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 justify-center gap-6">
             {cards.map((card) => (
               <div
                 key={card.title}
