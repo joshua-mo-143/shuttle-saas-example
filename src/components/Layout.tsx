@@ -17,7 +17,9 @@ export default function Layout({ children }: Props) {
       </Head>
       <div
         className={
-          email === '' ? 'min-h-screen flex-col items-center' : 'min-h-screen w-screen flex flex-row items-top'
+          email === ''
+            ? 'min-h-screen flex-col items-center'
+            : 'min-h-screen w-screen flex flex-col lg:flex-row items-top'
         }
       >
         <Navbar />

@@ -86,7 +86,7 @@ export default function DealIndex() {
 
   return (
     <Layout>
-      <div className="py-10 flex flex-col gap-4 w-full px-24 items-start">
+      <div className="px-5 py-10 flex flex-col gap-4 w-full md:px-24 items-start">
         <div>
           <h2 className="text-2xl font-semibold leading-tight my-10">Deals</h2>
         </div>
